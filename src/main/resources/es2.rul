@@ -1,0 +1,111 @@
+;;
+;; Agents 2.0 - VLSI Cell Generator. 
+;; Copyright (C) 2000  Dilvan Moreira
+;;
+;; This program is free software; you can redistribute it and/or
+;; modify it under the terms of the GNU General Public License
+;; as published by the Free Software Foundation; either version 2
+;; of the License, or (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program; if not, write to the Free Software
+;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+;;
+;; Contact: dilvan@computer.org
+;;          Paper mail: Rua Dr Domingos Faro 150, Ap 14
+;;                      Jardim Alvorada
+;;                      13562-320 Sao Carlos-SP
+;;                      BRAZIL
+;;
+
+;;
+;;		Process rules for the es2 process
+;;
+
+;;	Beginning of Database
+ 
+(rulesDB
+
+;;
+;;		Minimum grid value
+;;
+
+(gridValue (E 2 -7))
+
+;;
+;;		All Acceptable Layers' names
+
+(layersNames (LIST CXCL BCCD PBASE NWELL NDIFF PDIFF POLY CONT MET1 VIA MET2 CPASS))
+
+;;
+;;		Minimum Width L1
+
+(minWidth  NWELL (E 80   -7))
+(minWidth  NDIFF (E 20   -7))
+(minWidth  PDIFF (E 20   -7))
+(minWidth  POLY  (E 16   -7))
+(minWidth  CONT  (E 20   -7))
+(minWidth  MET1  (E 24   -7))
+(minWidth  VIA   (E 20   -7))
+(minWidth  MET2  (E 24   -7))
+(minWidth  PASS  (E 1000 -7))
+
+;;
+;;		Mininum Spacing L1 to L2
+
+(minSpacing   NWELL NWELL (E 128 -7)) 
+(minSpacing   NWELL NDIFF (E 96  -7))
+(minSpacing   NWELL PDIFF (E 48  -7))
+
+(minSpacing   NDIFF NDIFF (E 32  -7))
+(minSpacing   NDIFF PDIFF (E 32  -7))
+(minSpacing   NDIFF POLY  (E 8   -7))
+(minSpacing   NDIFF CONT  (E 14  -7))
+
+(minSpacing   PDIFF PDIFF (E 32  -7))
+(minSpacing   PDIFF POLY  (E 8   -7))
+(minSpacing   PDIFF CONT  (E 14  -7))
+
+(minSpacing   POLY  POLY  (E 24  -7))
+(minSpacing   POLY  CONT  (E 14  -7))
+(minSpacing   POLY  VIA   (E 22  -7))
+
+(minSpacing   CONT  CONT  (E 20  -7))
+(minSpacing   CONT  VIA   (E  20  -7))
+
+(minSpacing   MET1  MET1  (E 24  -7))
+
+(minSpacing   VIA   VIA   (E 20  -7))
+
+(minSpacing   MET2  MET2  (E 24  -7))
+
+
+;;
+;;		Minimum Overlaping L1 L2
+
+(minOverlaping   NWELL NDIFF (E 0    0))
+(minOverlaping   NWELL PDIFF (E 48  -7))
+
+(minOverlaping   NDIFF POLY  (E 24  -7))
+(minOverlaping   NDIFF CONT  (E 10  -7))
+
+(minOverlaping   PDIFF POLY  (E 24  -7))
+(minOverlaping   PDIFF CONT  (E 10  -7))
+
+(minOverlaping   POLY  CONT  (E 10  -7))
+
+(minOverlaping   MET1  CONT  (E 10  -7))
+(minOverlaping   MET1  VIA   (E 10  -7))
+
+(minOverlaping   MET2  VIA   (E 10  -7))
+
+;;	End of database
+)
+
+
+

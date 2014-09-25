@@ -1,0 +1,256 @@
+(EDIF BICMOS.cir
+   (status (EDIFVersion 0 9 5) (EDIFLevel 0) )
+   (design BICMOS (qualify BICMOS mainCell))
+   (library BICMOS
+      (cell VSS
+         (userData cellFunction pad)
+         (view maskLayout Physical
+            (interface
+               (declare inout port pad)
+               (portImplementation pad
+                  (figureGroup MET1 (rectangle (point -16 -16)  (point 412 -6)))
+               )
+            )
+            (contents
+                  (figureGroup MET1 (rectangle (point -16 -16)  (point 412 -6)))
+            )
+         )
+      )
+      (cell VDD
+         (userData cellFunction pad)
+         (view maskLayout Physical
+            (interface
+               (declare inout port pad)
+               (portImplementation pad
+                  (figureGroup MET1 (rectangle (point -16 208)  (point 412 218)))
+               )
+            )
+            (contents
+                  (figureGroup MET1 (rectangle (point -16 208)  (point 412 218)))
+            )
+         )
+      )
+      (cell A
+         (userData cellFunction pad)
+         (view maskLayout Physical
+            (interface
+               (declare inout port pad)
+               (portImplementation pad
+                  (figureGroup MET1 (rectangle (point -16 51)  (point 0 61)))
+               )
+            )
+            (contents
+                  (figureGroup MET1 (rectangle (point -16 51)  (point 0 61)))
+            )
+         )
+      )
+      (cell B
+         (userData cellFunction pad)
+         (view maskLayout Physical
+            (interface
+               (declare inout port pad)
+               (portImplementation pad
+                  (figureGroup MET1 (rectangle (point -16 123)  (point 0 133)))
+               )
+            )
+            (contents
+                  (figureGroup MET1 (rectangle (point -16 123)  (point 0 133)))
+            )
+         )
+      )
+      (cell OUT
+         (userData cellFunction pad)
+         (view maskLayout Physical
+            (interface
+               (declare inout port pad)
+               (portImplementation pad
+                  (figureGroup MET1 (rectangle (point 396 88)  (point 412 98)))
+               )
+            )
+            (contents
+                  (figureGroup MET1 (rectangle (point 396 88)  (point 412 98)))
+            )
+         )
+      )
+      (cell stdNode
+         (userData cellFunction node)
+         (view maskLayout Physical
+            (interface (declare inout port node))))
+      (cell NPN
+         (userData cellFunction NPN)
+         (view maskLayout Physical
+            (interface
+               (declare input port base)
+               (declare inout port (list colector emiter))
+               (portImplementation base
+                  (figureGroup MET1 (rectangle (point 107 33)  (point 129 55)))
+               ) 
+               (portImplementation colector 
+                  (figureGroup MET1 (rectangle (point 8 20)  (point 30 68)))
+               ) 
+               (portImplementation emiter 
+                  (figureGroup MET1 (rectangle (point 59 33)  (point 81 55)))
+               ) 
+            ) 
+            (contents 
+                  (figureGroup MET1 (rectangle (point 107 33)  (point 129 55)))
+                  (figureGroup CONT (rectangle (point 114 40)  (point 122 48)))
+                  (figureGroup MET1 (rectangle (point 8 20)  (point 30 68)))
+                  (figureGroup CONT (rectangle (point 15 27)  (point 23 35)))
+                  (figureGroup CONT (rectangle (point 15 53)  (point 23 61)))
+                  (figureGroup MET1 (rectangle (point 59 33)  (point 81 55)))
+                  (figureGroup CONT (rectangle (point 66 40)  (point 74 48)))
+                  (figureGroup PDIFF (rectangle (point 107 33)  (point 129 55)))
+                  (figureGroup NDIFF (rectangle (point 8 20)  (point 30 68)))
+                  (figureGroup NDIFF (rectangle (point 59 33)  (point 81 55)))
+                  (figureGroup PBASE (rectangle (point 46 20)  (point 142 68)))
+                  (figureGroup BCCD (rectangle (point 0 0)  (point 162 88)))
+                  (figureGroup NWELL (rectangle (point 0 0)  (point 162 88)))
+            ) 
+         ) 
+      ) 
+      (cell NMOS
+         (userData cellFunction NMOS)
+         (view maskLayout Physical
+            (interface
+               (declare input port gate)
+               (declare inout port (list source drain))
+               (permutable source drain)
+               (portImplementation gate
+                  (figureGroup POLY (rectangle (point 22 0)  (point 30 8)))
+                  (figureGroup POLY (rectangle (point 22 28)  (point 30 36)))
+               )
+               (portImplementation drain
+                  (figureGroup NDIFF (rectangle (point 0 12)  (point 14 24)))
+               )
+               (portImplementation source
+                  (figureGroup NDIFF (rectangle (point 38 12)  (point 52 24)))
+               )
+            )
+            (contents
+                  (figureGroup NDIFF (rectangle (point 0 12)  (point 14 24)))
+                  (figureGroup NDIFF (rectangle (point 38 12)  (point 52 24)))
+                  (figureGroup NDIFF (rectangle (point 14 12)  (point 38 24)))
+                  (figureGroup POLY (rectangle (point 22 0)  (point 30 36)))
+            )
+         )
+      )
+      (cell PMOS
+         (userData cellFunction PMOS)
+         (view maskLayout Physical
+            (interface
+               (declare input port gate)
+               (declare inout port (list source drain))
+               (permutable source drain)
+               (portImplementation gate
+                  (figureGroup POLY (rectangle (point 22 0)  (point 30 8)))
+                  (figureGroup POLY (rectangle (point 22 28)  (point 30 36)))
+               )
+               (portImplementation drain
+                  (figureGroup PDIFF (rectangle (point 38 12)  (point 52 24)))
+               )
+               (portImplementation source
+                  (figureGroup PDIFF (rectangle (point 0 12)  (point 14 24)))
+               )
+            )
+            (contents
+                  (figureGroup PDIFF (rectangle (point 38 12)  (point 52 24)))
+                  (figureGroup PDIFF (rectangle (point 0 12)  (point 14 24)))
+                  (figureGroup PDIFF (rectangle (point 14 12)  (point 38 24)))
+                  (figureGroup POLY (rectangle (point 22 0)  (point 30 36)))
+            )
+         )
+      )
+      (cell mainCell
+         (userData cellFunction main)
+         (view symbolic Symbolical
+            (contents
+
+               (instance NPN Physical cmp0 (transform (translate 212 118) ))
+               (instance NPN Physical cmp1 (transform (translate 212 -7) ))
+               (instance NMOS Physical cmp2 (transform (translate 20 21) ))
+               (instance NMOS Physical cmp3 (transform MY (translate 124 21) ))
+               (instance NMOS Physical cmp4 (transform (translate 124 21) ))
+               (instance NMOS Physical cmp5 (transform (translate 20 57) ))
+               (instance NMOS Physical cmp6 (transform MY (translate 124 57) ))
+               (instance PMOS Physical cmp7 (transform (translate 20 137) ))
+               (instance PMOS Physical cmp8 (transform MY (translate 124 137) ))
+               (instance stdNode Physical cmp9 )
+               (instance stdNode Physical cmp10 )
+               (instance stdNode Physical cmp11 )
+               (instance stdNode Physical cmp12 )
+               (instance stdNode Physical cmp13 )
+               (instance stdNode Physical cmp14 )
+               (instance stdNode Physical cmp15 )
+               (instance stdNode Physical cmp16 )
+               (instance stdNode Physical cmp17 )
+               (instance VSS Physical cmp18 )
+               (instance VDD Physical cmp19 )
+               (instance A Physical cmp20 )
+               (instance B Physical cmp21 )
+               (instance OUT Physical cmp22 )
+               (mustJoin 
+                  (qualify cmp9 node) 
+                  (qualify cmp6 SOURCE) 
+                  (qualify cmp5 SOURCE) 
+               )
+               (mustJoin 
+                  (qualify cmp10 node) 
+                  (qualify cmp22 PAD) 
+                  (qualify cmp6 DRAIN) 
+                  (qualify cmp0 EMITER) 
+                  (qualify cmp1 COLECTOR) 
+               )
+               (mustJoin 
+                  (qualify cmp11 node) 
+                  (qualify cmp3 SOURCE) 
+                  (qualify cmp2 SOURCE) 
+               )
+               (mustJoin 
+                  (qualify cmp12 node) 
+                  (qualify cmp3 DRAIN) 
+                  (qualify cmp5 DRAIN) 
+                  (qualify cmp4 DRAIN) 
+                  (qualify cmp1 BASE) 
+               )
+               (mustJoin 
+                  (qualify cmp13 node) 
+                  (qualify cmp8 SOURCE) 
+                  (qualify cmp7 SOURCE) 
+                  (qualify cmp2 DRAIN) 
+                  (qualify cmp4 GATE) 
+                  (qualify cmp0 BASE) 
+               )
+               (mustJoin 
+                  (qualify cmp14 node) 
+                  (qualify cmp21 PAD) 
+                  (qualify cmp8 GATE) 
+                  (qualify cmp3 GATE) 
+                  (qualify cmp6 GATE) 
+               )
+               (mustJoin 
+                  (qualify cmp15 node) 
+                  (qualify cmp20 PAD) 
+                  (qualify cmp7 GATE) 
+                  (qualify cmp2 GATE) 
+                  (qualify cmp5 GATE) 
+               )
+               (mustJoin 
+                  (qualify cmp16 node) 
+                  (qualify cmp19 PAD) 
+                  (qualify cmp8 DRAIN) 
+                  (qualify cmp7 DRAIN) 
+                  (qualify cmp0 COLECTOR) 
+               )
+               (mustJoin 
+                  (qualify cmp17 node) 
+                  (qualify cmp18 PAD) 
+                  (qualify cmp4 SOURCE) 
+                  (qualify cmp1 EMITER) 
+               )
+
+            )
+         )
+      )
+   )
+)

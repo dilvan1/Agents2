@@ -1,0 +1,273 @@
+(EDIF bicmos.cir
+   (status (EDIFVersion 0 9 5) (EDIFLevel 0) )
+   (design bicmos (qualify bicmos mainCell))
+   (library bicmos
+
+      (technology es2
+         (numberDefinition MKS
+            (scale distance 1 (e 25 -8)))
+      )
+
+      (cell NMOS
+         (userData cellFunction Nmos) 
+         (view maskLayout Physical 
+            (interface 
+               (declare input port gate) 
+               (declare inout port (list source drain)) 
+               (permutable source drain) 
+               (portImplementation gate 
+                  (figureGroup POLY (rectangle (point 22 0)  (point 30 8))) 
+                  (figureGroup POLY (rectangle (point 22 28) (point 30 36)))
+               ) 
+               (portImplementation drain 
+                  (figureGroup NDIFF (rectangle (point 0 12) (point 14 24)))) 
+               (portImplementation source 
+                  (figureGroup NDIFF (rectangle (point 38 12) (point 52 24)))) 
+            ) 
+            (contents 
+               (figureGroup NDIFF (rectangle (point 0  12) (point 14 24)))
+               (figureGroup NDIFF (rectangle (point 38 12) (point 52 24))) 
+               (figureGroup NDIFF (rectangle (point 14 12) (point 38 24))) 
+               (figureGroup POLY  (rectangle (point 22 0)  (point 30 36))) 
+            ) 
+         ) 
+      ) 
+
+      (cell PMOS
+         (userData cellFunction Pmos) 
+         (view maskLayout Physical 
+            (interface 
+               (declare input port gate) 
+               (declare inout port (list source drain)) 
+               (permutable source drain) 
+               (portImplementation gate 
+                  (figureGroup POLY (rectangle (point 22 0)  (point 30 8))) 
+                  (figureGroup POLY (rectangle (point 22 28) (point 30 36)))
+               ) 
+               (portImplementation drain 
+                  (figureGroup PDIFF (rectangle (point 0 12) (point 14 24)))) 
+               (portImplementation source 
+                  (figureGroup PDIFF (rectangle (point 38 12) (point 52 24)))) 
+            ) 
+            (contents 
+               (figureGroup PDIFF (rectangle (point 0  12) (point 14 24)))
+               (figureGroup PDIFF (rectangle (point 38 12) (point 52 24))) 
+               (figureGroup PDIFF (rectangle (point 14 12) (point 38 24))) 
+               (figureGroup POLY  (rectangle (point 22 0)  (point 30 36))) 
+            ) 
+         ) 
+      ) 
+      (cell NPN
+         (userData cellFunction NPN) 
+         (view maskLayout Physical 
+            (interface 
+               (declare input port base) 
+               (declare inout port (list colector emiter)) 
+               (portImplementation base 
+                  (figureGroup MET1 (rectangle (point 107 33)  (point 129 55)))) 
+               (portImplementation colector 
+                  (figureGroup MET1 (rectangle (point 8 20) (point 30 68)))) 
+               (portImplementation emiter 
+                  (figureGroup MET1 (rectangle (point 59 33) (point 81 55)))) 
+            ) 
+            (contents 
+               (figureGroup MET1 (rectangle (point 107 33) (point 129 55)))
+               (figureGroup CONT (rectangle (point 114 40) (point 122 48)))
+               (figureGroup MET1 (rectangle (point 8 20)   (point 30 68))) 
+               (figureGroup CONT (rectangle (point 15 27)  (point 23 35))) 
+               (figureGroup CONT (rectangle (point 15 53)  (point 23 61)))
+               (figureGroup MET1 (rectangle (point 59 33)  (point 81 55)))
+               (figureGroup CONT (rectangle (point 66 40)  (point 74 48)))
+ 
+               (figureGroup PDIFF (rectangle (point 107 33)  (point 129 55))) 
+               (figureGroup NDIFF (rectangle (point 8 20) (point 30 68))) 
+               (figureGroup NDIFF (rectangle (point 59 33) (point 81 55)))
+               (figureGroup PBASE (rectangle (point 46 20) (point 142 68)))
+               (figureGroup BCCD (rectangle (point 0 0) (point 162 88)))
+               (figureGroup NWELL (rectangle (point 0 0) (point 162 88)))
+            ) 
+         ) 
+      ) 
+
+      (cell RESISTOR
+         (view maskLayout Physical 
+            (interface 
+               (declare inout port drain) 
+               (declare inout port source) 
+               (portImplementation drain 
+                  (figureGroup MET1 (rectangle (point 12 146) (point 34 168))))
+               (portImplementation source 
+                  (figureGroup MET1 (rectangle (point 108 146) (point 130 168))))
+            ) 
+            (contents 
+               (figureGroup MET1 (rectangle (point 12 146) (point 34 168)))
+               (figureGroup CONT (rectangle (point 19 153) (point 27 161)))
+
+               (figureGroup PBASE (rectangle (point 12 146) (point 34 168)))
+               (figureGroup PBASE (rectangle (point 16 26) (point 30 146)))
+               (figureGroup PBASE (rectangle (point 16 12) (point 62 26)))
+               (figureGroup PBASE (rectangle (point 48 26) (point 62 126)))
+               (figureGroup PBASE (rectangle (point 48 126) (point 94 140)))
+               (figureGroup PBASE (rectangle (point 80 26) (point 94 126)))
+               (figureGroup PBASE (rectangle (point 80 12) (point 126 26)))
+               (figureGroup PBASE (rectangle (point 112 26) (point 126 146)))
+               (figureGroup PBASE (rectangle (point 108 146) (point 130 168)))
+
+               (figureGroup MET1 (rectangle (point 108 146) (point 130 168)))
+               (figureGroup CONT (rectangle (point 115 153)  (point 123 161)))
+ 
+               (figureGroup BCCD (rectangle (point 0 0) (point 142 180)))
+               (figureGroup NWELL (rectangle (point 0 0) (point 142 180)))
+            ) 
+         ) 
+      ) 
+
+
+
+      (cell stdNode 
+         (userData cellFunction node) 
+         (view maskLayout Physical 
+            (interface (declare inout port node))) 
+      ) 
+
+      (cell VSS
+         (userData cellFunction pad )
+         (view maskLayout Physical 
+            (interface 
+               (declare inout port pad) 
+               (portImplementation pad 
+                  (figureGroup MET1 (rectangle (point -16 -16) (point 594 -6)))) 
+            ) 
+            (contents 
+                  (figureGroup MET1 (rectangle (point -16 -16) (point 594 -6))) 
+            ) 
+         ) 
+      ) 
+      (cell VDD
+         (userData cellFunction pad )
+         (view maskLayout Physical 
+            (interface 
+               (declare inout port pad) 
+               (portImplementation pad 
+                  (figureGroup MET1 (rectangle (point -16 208) (point 594 218)))) 
+            ) 
+            (contents 
+                  (figureGroup MET1 (rectangle (point -16 208) (point 594 218))) 
+            ) 
+         ) 
+      ) 
+      (cell OUT
+         (userData cellFunction pad )
+         (view maskLayout Physical 
+            (interface 
+               (declare inout port pad) 
+               (portImplementation pad 
+                  (figureGroup MET1 (rectangle (point 579 88) (point 594 98)))) 
+            ) 
+            (contents 
+               (figureGroup MET1 (rectangle (point 579 88) (point 594 98))) 
+            ) 
+         ) 
+      ) 
+      (cell A
+         (userData cellFunction pad )
+         (view maskLayout Physical 
+            (interface 
+               (declare inout port pad) 
+               (portImplementation pad 
+                  (figureGroup MET1 (rectangle (point -16 51) (point 0 61)))) 
+            ) 
+            (contents 
+                  (figureGroup MET1 (rectangle (point -16 51) (point 0 61))) 
+            ) 
+         ) 
+      ) 
+      (cell B
+         (userData cellFunction pad )
+         (view maskLayout Physical 
+            (interface 
+               (declare inout port pad) 
+               (portImplementation pad 
+                  (figureGroup MET1 (rectangle (point -16 123) (point 0 133)))) 
+            ) 
+            (contents 
+                  (figureGroup MET1 (rectangle (point -16 123) (point 0 133))) 
+            ) 
+         ) 
+      ) 
+ 
+
+      (cell mainCell 
+         (userData cellFunction main) 
+         (view symbolic Symbolical 
+            (contents 
+               (instance RESISTOR Physical res1 )
+
+               (instance PMOS Physical fet1 )
+               (instance NMOS Physical fet2 )
+               (instance NMOS Physical fet3 )
+               (instance PMOS Physical fet4 )
+               (instance NMOS Physical fet5 )
+               (instance NMOS Physical fet6 )
+               (instance NMOS Physical fet7 )
+               (instance NPN Physical bip1 )
+               (instance NPN Physical bip2 )
+
+               (instance stdNode Physical node8)
+               (instance stdNode Physical node7)
+               (instance stdNode Physical node6)
+               (instance stdNode Physical node5)
+               (instance stdNode Physical node4)
+               (instance stdNode Physical node3)
+               (instance stdNode Physical node2)
+               (instance stdNode Physical node1)
+               (instance stdNode Physical node0)
+
+               (instance VSS Physical VSS)
+               (instance VDD Physical VDD)
+               (instance A Physical A)
+               (instance B Physical B)
+               (instance OUT Physical OUT)
+
+              (mustJoin (qualify node0 node)
+                  (qualify VSS pad)
+                  (qualify fet7 source) (qualify bip2 emiter)
+               ) 
+              (mustJoin (qualify node1 node) 
+                  (qualify VDD pad)
+                  (qualify res1 drain) 
+                  (qualify fet1 drain) (qualify fet4 drain)
+                  (qualify bip1 colector) 
+               ) 
+              (mustJoin (qualify node2 node) 
+                  (qualify A pad) (qualify fet4 gate)
+                  (qualify fet5 gate) (qualify fet6 gate)
+               ) 
+              (mustJoin (qualify node3 node) 
+                  (qualify B pad) (qualify fet1 gate)
+                  (qualify fet2 gate) (qualify fet3 gate)
+               ) 
+              (mustJoin (qualify node4 node) 
+                  (qualify fet1 source) (qualify fet4 source)
+                  (qualify fet5 drain) (qualify fet7 gate) 
+                  (qualify bip1 base) 
+               ) 
+              (mustJoin (qualify node5 node) 
+                  (qualify fet2 drain) (qualify fet6 drain)
+                  (qualify fet7 drain) (qualify bip2 base) 
+               ) 
+              (mustJoin (qualify node6 node) 
+                  (qualify fet2 source) (qualify fet5 source)
+               ) 
+              (mustJoin (qualify node7 node) 
+                  (qualify OUT pad) (qualify res1 source) (qualify fet3 drain)
+                  (qualify bip1 emiter) (qualify bip2 colector) 
+               ) 
+              (mustJoin (qualify node8 node) 
+                  (qualify fet3 source) (qualify fet6 source)
+               )
+            ) 
+         ) 
+      ) 
+   ) 
+)
