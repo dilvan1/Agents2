@@ -41,246 +41,255 @@ import java.util.List;
 
 class Display1 extends Frame implements Display, ActionListener, AdjustmentListener {
 
-    Button quitB;
-    Button zoomIn;
-    Button zoomOut;
-    Button setupD;
-    java.awt.List showL;
-    java.awt.List fillL;
-    CompPaint cp;
-    LayerDialog dialog;
-    int zoom = 128;
-    int dx = 20;
-    int dy = 20;
-    layout.util.Rectangle area = null;
-    ScrollPane sp = new ScrollPane();
-    Dimension spSize, cpSize;
-    int heightY = 0, widthX = 0;
+	Button quitB;
+	Button zoomIn;
+	Button zoomOut;
+	Button setupD;
+	java.awt.List showL;
+	java.awt.List fillL;
+	CompPaint cp;
+	LayerDialog dialog;
+	int zoom = 128;
+	int dx = 20;
+	int dy = 20;
+	layout.util.Rectangle area = null;
+	ScrollPane sp = new ScrollPane();
+	Dimension spSize, cpSize;
+	int heightY = 0, widthX = 0;
 
-    List layer = Gen.newList();
-    java.util.List[] lst = new java.util.List[30];
+	List layer = Gen.newList();
+	java.util.List[] lst = new java.util.List[30];
 
 
-    List extras;
+	List extras;
 
-    Display1(String comp) {
-        super("Display " + comp);
+	Display1(String comp) {
+		super("Display " + comp);
 
-        for (int aux1 = 0; aux1 < lst.length; aux1++)
-            lst[aux1] = Gen.newList();
-        extras = Gen.newList();
+		for (int aux1 = 0; aux1 < lst.length; aux1++)
+			lst[aux1] = Gen.newList();
+		extras = Gen.newList();
 
-        layer.add(new LayerSetup("NWELL", Color.pink, true, false));
-        layer.add(new LayerSetup("BCCD", Color.blue.brighter(), true, false));
-        layer.add(new LayerSetup("PBASE", Color.magenta, true, false));
-        layer.add(new LayerSetup("PDIFF", Color.green.darker(), true, false));
-        layer.add(new LayerSetup("NDIFF", Color.green, true, false));
-        layer.add(new LayerSetup("POLY", Color.red, true, true));
-        layer.add(new LayerSetup("MET1", Color.blue, true, false));
-        layer.add(new LayerSetup("CONT", Color.gray, true, false));
-        layer.add(new LayerSetup("MET2", Color.cyan, true, false));
-        layer.add(new LayerSetup("VIA", Color.yellow, true, false));
-        layer.add(new LayerSetup("LINE", Color.black, true, false));
-        layer.add(new LayerSetup("LABEL", Color.black, true, false));
+		layer.add(new LayerSetup("NWELL", Color.pink, true, false));
+		layer.add(new LayerSetup("BCCD", Color.blue.brighter(), true, false));
+		layer.add(new LayerSetup("PBASE", Color.magenta, true, false));
+		layer.add(new LayerSetup("PDIFF", Color.green.darker(), true, false));
+		layer.add(new LayerSetup("NDIFF", Color.green, true, false));
+		layer.add(new LayerSetup("POLY", Color.red, true, true));
+		layer.add(new LayerSetup("MET1", Color.blue, true, false));
+		layer.add(new LayerSetup("CONT", Color.gray, true, false));
+		layer.add(new LayerSetup("MET2", Color.cyan, true, false));
+		layer.add(new LayerSetup("VIA", Color.yellow, true, false));
+		layer.add(new LayerSetup("LINE", Color.black, true, false));
+		layer.add(new LayerSetup("LABEL", Color.black, true, false));
 
-        // Make the lists of layers
-        showL = new java.awt.List(9, true);
-        fillL = new java.awt.List(9, true);
-        for (int aux1 = 0; aux1 < layer.size(); aux1++) {
-            LayerSetup setup = (LayerSetup) layer.get(aux1);
-            showL.add((String) setup.layer);
-            if (setup.show) showL.select(aux1);
-            fillL.add((String) setup.layer);
-            if (setup.fill) fillL.select(aux1);
-        }
-        dialog = new LayerDialog(this, showL, fillL);
+		// Make the lists of layers
+		showL = new java.awt.List(9, true);
+		fillL = new java.awt.List(9, true);
+		for (int aux1 = 0; aux1 < layer.size(); aux1++) {
+			LayerSetup setup = (LayerSetup) layer.get(aux1);
+			showL.add(setup.layer);
+			if (setup.show) showL.select(aux1);
+			fillL.add(setup.layer);
+			if (setup.fill) fillL.select(aux1);
+		}
+		dialog = new LayerDialog(this, showL, fillL);
 
-        //Add the text field to the applet.
-        setFont(new Font("Helvetica", Font.BOLD, 12));
-        Color corback = Color.lightGray;
-        setBackground(new Color(255, 204, 102));
+		//Add the text field to the applet.
+		setFont(new Font("Helvetica", Font.BOLD, 12));
+		Color corback = Color.lightGray;
+		setBackground(new Color(255, 204, 102));
 
-        Panel p = new Panel();
+		Panel p = new Panel();
 
-        // Zoom in button
-        zoomIn = new Button(" Zoom In ");
-        zoomIn.setBackground(corback);
-        zoomIn.addActionListener(this);
-        p.add(zoomIn);
+		// Zoom in button
+		zoomIn = new Button(" Zoom In ");
+		zoomIn.setBackground(corback);
+		zoomIn.addActionListener(this);
+		p.add(zoomIn);
 
-        // Zoom out button
-        zoomOut = new Button(" Zoom Out ");
-        zoomOut.setBackground(corback);
-        zoomOut.addActionListener(this);
-        p.add(zoomOut);
+		// Zoom out button
+		zoomOut = new Button(" Zoom Out ");
+		zoomOut.setBackground(corback);
+		zoomOut.addActionListener(this);
+		p.add(zoomOut);
 
-        // Show dialog
-        setupD = new Button(" Setup ");
-        setupD.setBackground(corback);
-        setupD.addActionListener(this);
-        p.add(setupD);
+		// Show dialog
+		setupD = new Button(" Setup ");
+		setupD.setBackground(corback);
+		setupD.addActionListener(this);
+		p.add(setupD);
 
-        // Quit button
-        quitB = new Button(" Quit ");
-        quitB.setBackground(corback);
-        quitB.addActionListener(this);
-        p.add(quitB);
+		// Quit button
+		quitB = new Button(" Quit ");
+		quitB.setBackground(corback);
+		quitB.addActionListener(this);
+		p.add(quitB);
 
-        //    Add panel with Buttons
-        add("North", p);
+		//    Add panel with Buttons
+		add("North", p);
 
-        cp = new CompPaint(this);
-        cp.setBackground(Color.white);
+		cp = new CompPaint(this);
+		cp.setBackground(Color.white);
 
-        //ScrollPane sp = new ScrollPane();
+		//ScrollPane sp = new ScrollPane();
 
-        sp.setSize(600, 600);
-        sp.add(cp);
+		sp.setSize(600, 600);
+		sp.add(cp);
 
-        add(sp);
+		add(sp);
 
-        //add("Center", cp);
-        //hor= new Scrollbar(Scrollbar.HORIZONTAL);
-        //hor.addAdjustmentListener(this);
-        //add("South", hor);
-        //ver= new Scrollbar(Scrollbar.VERTICAL);
-        //ver.addAdjustmentListener(this);
-        //add("East", ver);
+		//add("Center", cp);
+		//hor= new Scrollbar(Scrollbar.HORIZONTAL);
+		//hor.addAdjustmentListener(this);
+		//add("South", hor);
+		//ver= new Scrollbar(Scrollbar.VERTICAL);
+		//ver.addAdjustmentListener(this);
+		//add("East", ver);
 
-        pack();
-        setVisible(true);
+		pack();
+		setVisible(true);
 
-        //   Add delete window
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
-    }
+		//   Add delete window
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		});
+	}
 
-    /**
-     * Listenner of Events.
-     *
-     * @param e The event.
-     */
-    public void actionPerformed(ActionEvent e) {
-        Object source = e.getSource();
-        Dimension d = sp.getViewportSize();
-        Dimension cd = cp.getSize();
-        int dW = cd.width - d.width;
-        int dH = cd.height - d.height;
+	/**
+	 * Listenner of Events.
+	 *
+	 * @param e The event.
+	 */
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		Dimension d = sp.getViewportSize();
+		Dimension cd = cp.getSize();
+		int dW = cd.width - d.width;
+		int dH = cd.height - d.height;
 
-        if (source == quitB) {
-            System.exit(0);
-        }
-        if (source == setupD) {
-            dialog.setVisible(true);
-        }
-        if (source == zoomOut) {
-            zoom = zoom / 2;
-            if (zoom < 2) zoom = 2;
-            cp.width = (area.getLx() * zoom) / 122;
-            cp.height = ((area.getLy() + (2 * dy)) * zoom) / 122;
-            //cp.width = (widthX  * zoom) / 122;
-            //cp.height =((heightY + (2 * dy)) * zoom) / 122;
-            refresh();
-            validate();
-        }
+		if (source == quitB)
+			System.exit(0);
+		if (source == setupD)
+			dialog.setVisible(true);
+		if (source == zoomOut) {
+			zoom = zoom / 2;
+			if (zoom < 2) zoom = 2;
+			cp.width = (area.getLx() * zoom) / 122;
+			cp.height = ((area.getLy() + (2 * dy)) * zoom) / 122;
+			//cp.width = (widthX  * zoom) / 122;
+			//cp.height =((heightY + (2 * dy)) * zoom) / 122;
+			refresh();
+			validate();
+		}
 
-        if (source == zoomIn) {
-            zoom = zoom * 2;
-            if (zoom > 2048) zoom = 2048;
-            cp.width = (area.getLx() * zoom) / 122;
-            cp.height = ((area.getLy() + (2 * dy)) * zoom) / 122;
-            //cp.width = (widthX  * zoom) / 122;
-            //cp.height =((heightY + (2 * dy)) * zoom) / 122;
-            refresh();
-            validate();
-        }
-    }
+		if (source == zoomIn) {
+			zoom = zoom * 2;
+			if (zoom > 2048) zoom = 2048;
+			cp.width = (area.getLx() * zoom) / 122;
+			cp.height = ((area.getLy() + (2 * dy)) * zoom) / 122;
+			//cp.width = (widthX  * zoom) / 122;
+			//cp.height =((heightY + (2 * dy)) * zoom) / 122;
+			refresh();
+			validate();
+		}
+	}
 
-    public void addLabel(String label, layout.util.Pt pt) {
-        int aux1;
-        for (aux1 = 0; aux1 < layer.size(); aux1++) {
-            if ("LABEL".equals(((LayerSetup) layer.get(aux1)).layer)) break;
-        }
-        if (aux1 >= layer.size()) throw new RuntimeException("Label problem.");
-        lst[aux1].add(new RegLabel(label, pt));
-    }
+	@Override
+	public void addLabel(String label, layout.util.Pt pt) {
+		int aux1;
+		for (aux1 = 0; aux1 < layer.size(); aux1++)
+			if ("LABEL".equals(((LayerSetup) layer.get(aux1)).layer)) break;
+		if (aux1 >= layer.size()) throw new RuntimeException("Label problem.");
+		lst[aux1].add(new RegLabel(label, pt));
+	}
 
-    public void addLine(Linea lin, Color c) {
-        extras.add(new RegLine(lin, c));
-    }
+	@Override
+	public void addLine(Linea lin, Color c) {
+		extras.add(new RegLine(lin, c));
+	}
 
-    public void addRect(layout.util.Rectangle rec, Color c) {
-        extras.add(new RegRectangle(rec, c));
-    }
+	@Override
+	public void addRect(layout.util.Rectangle rec, Color c) {
+		extras.add(new RegRectangle(rec, c));
+	}
 
-    public void addRect(layout.util.Rectangle rec, String l) {
-        int aux1;
+	@Override
+	public void addRect(layout.util.Rectangle rec, String l) {
+		int aux1;
 
-        for (aux1 = 0; aux1 < layer.size(); aux1++) {
-            if (l.equals(((LayerSetup) layer.get(aux1)).layer)) break;
-        }
-        if (aux1 >= layer.size())
-            throw new RuntimeException("addRect: Unknown layer");
+		for (aux1 = 0; aux1 < layer.size(); aux1++)
+			if (l.equals(((LayerSetup) layer.get(aux1)).layer)) break;
+		if (aux1 >= layer.size())
+			throw new RuntimeException("addRect: Unknown layer");
 
-        setMaxProject(rec);
-        //rec.c2.y = rec.c2.y * -1;
-        lst[aux1].add(new RegRectangle(rec));
-    }
+		setMaxProject(rec);
+		//rec.c2.y = rec.c2.y * -1;
+		lst[aux1].add(new RegRectangle(rec));
+	}
 
-    public void addVector(Linea vect, Color c) {
-        Pt aux = vect.getPointOfT(20);
-        extras.add(new RegVector(vect.c1.x, vect.c1.y, aux.x, aux.y, c));
-        refresh();
-    }
+	@Override
+	public void addVector(Linea vect, Color c) {
+		Pt aux = vect.getPointOfT(20);
+		extras.add(new RegVector(vect.c1.x, vect.c1.y, aux.x, aux.y, c));
+		refresh();
+	}
 
-    public void addWire(layout.comp.Wire w) {
-        w.drawOut(this);
-    }
+	@Override
+	public void addWire(layout.comp.Wire w) {
+		w.drawOut(this);
+	}
 
-    public void adjustmentValueChanged(AdjustmentEvent e) {
-        Object obj = e.getAdjustable();
+	@Override
+	public void adjustmentValueChanged(AdjustmentEvent e) {
+		Object obj = e.getAdjustable();
 
-        //if (obj==hor) dx=20-e.getValue();
-        //   else dy=20-e.getValue();
+		//if (obj==hor) dx=20-e.getValue();
+		//   else dy=20-e.getValue();
 
-        cpSize = cp.getSize();
-        spSize = sp.getViewportSize();
-    }
+		cpSize = cp.getSize();
+		spSize = sp.getViewportSize();
+	}
 
-    //addRect
-    public void clear() {
-        for (int aux1 = 0; aux1 < lst.length; aux1++)
-            lst[aux1].clear();
-        extras.clear();
-        refresh();
-    }
+	//addRect
+	@Override
+	public void clear() {
+		for (List element : lst)
+			element.clear();
+		extras.clear();
+		refresh();
+	}
 
-    public void clearExtras() {
-        extras.clear();
-        refresh();
-    }
+	@Override
+	public void clearExtras() {
+		extras.clear();
+		refresh();
+	}
 
-    public void doLayout() {
-        super.doLayout();
-    }
+	@Override
+	public void doLayout() {
+		super.doLayout();
+	}
 
-    public void refresh() {
-        cp.repaint();
-    }
+	@Override
+	public void refresh() {
+		cp.repaint();
+	}
 
-    // Save the tamanho maximo of project
-    public void setMaxProject(layout.util.Rectangle rec) {
+	// Save the tamanho maximo of project
+	public void setMaxProject(layout.util.Rectangle rec) {
 
-        if (area == null) area = new layout.util.Rectangle(rec);
-        if (rec.c1.x < area.c1.x) area.c1.x = rec.c1.x;
-        if (rec.c1.y < area.c1.y) area.c1.y = rec.c1.y;
-        if (rec.c2.x > area.c2.x) area.c2.x = rec.c2.x;
-        if (rec.c2.y > area.c2.y) area.c2.y = rec.c2.y;
+		if (area == null) area = new layout.util.Rectangle(rec);
+		if (rec.c1.x < area.c1.x) area.c1.x = rec.c1.x;
+		if (rec.c1.y < area.c1.y) area.c1.y = rec.c1.y;
+		if (rec.c2.x > area.c2.x) area.c2.x = rec.c2.x;
+		if (rec.c2.y > area.c2.y) area.c2.y = rec.c2.y;
 
-        widthX = area.getLx();
-        heightY = area.getLy();
-    }
+		widthX = area.getLx();
+		heightY = area.getLy();
+	}
 }

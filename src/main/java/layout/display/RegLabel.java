@@ -35,15 +35,16 @@ import java.awt.*;
 
 class RegLabel extends layout.util.Pt implements Reg {
 
-    String label;
+	String label;
 
-    public RegLabel(String label, layout.util.Pt pt) {
-        super(pt.x, pt.y);
-        this.label = label;
-    }
+	public RegLabel(String label, layout.util.Pt pt) {
+		super(pt.x, pt.y);
+		this.label = label;
+	}
 
-    public void paint(Graphics g, int dx, int dy, int zoom, Color c, boolean fill, int heightY) {
-        g.setColor(c);
-        g.drawString(label, ((x + dx) * zoom) / 128, (((heightY - y) + dy) * zoom) / 128);
-    }
+	@Override
+	public void paint(Graphics g, int dx, int dy, int zoom, Color c, boolean fill, int heightY) {
+		g.setColor(c);
+		g.drawString(label, ((x + dx) * zoom) / 128, (((heightY - y) + dy) * zoom) / 128);
+	}
 }

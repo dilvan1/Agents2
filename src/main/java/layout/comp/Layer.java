@@ -39,37 +39,39 @@ import java.util.List;
 
 public class Layer extends Symbol implements Externalizable {
 
-    static Hashtable layers = new Hashtable(); //has to come first
+	static public Layer getLayer(String str) {
+		Layer l = (Layer) layers.get(str);
+		if (l != null) return l;
+		throw new RuntimeException("Layer: Invalid layer.");
+	}
 
-    public static Layer EMPTY = new Layer("EMPTY");
-    public static Layer NDIFF = new Layer("NDIFF");
-    public static Layer PDIFF = new Layer("PDIFF");
-    public static Layer POLY = new Layer("POLY");
-    public static Layer CONT = new Layer("CONT");
-    public static Layer MET1 = new Layer("MET1");
-    public static Layer VIA = new Layer("VIA");
-    public static Layer MET2 = new Layer("MET2");
-    public static Layer PWELL = new Layer("PWELL");
-    public static Layer NWELL = new Layer("NWELL");
+	static public void makeLayers(List lays) {
+		//if (layers.size()>8) throw new RuntimeException("Layer: Can't make layers.");
+		for (int aux1 = 0; aux1 < lays.size(); aux1++)
+			new Layer(((String) lays.get(aux1)).toUpperCase());
+	}
 
-    public Layer() {
-    }
+	static Hashtable layers = new Hashtable(); //has to come first
 
-    private Layer(String name) {
-        super(name);
-        if (layers.get(name) == null)
-            layers.put(name, this);
-    }
+	public static Layer EMPTY = new Layer("EMPTY");
+	public static Layer NDIFF = new Layer("NDIFF");
+	public static Layer PDIFF = new Layer("PDIFF");
+	public static Layer POLY = new Layer("POLY");
+	public static Layer CONT = new Layer("CONT");
+	public static Layer MET1 = new Layer("MET1");
+	public static Layer VIA = new Layer("VIA");
+	public static Layer MET2 = new Layer("MET2");
 
-    static public Layer getLayer(String str) {
-        Layer l = (Layer) layers.get(str);
-        if (l != null) return l;
-        throw new RuntimeException("Layer: Invalid layer.");
-    }
+	public static Layer PWELL = new Layer("PWELL");
 
-    static public void makeLayers(List lays) {
-        //if (layers.size()>8) throw new RuntimeException("Layer: Can't make layers.");
-        for (int aux1 = 0; aux1 < lays.size(); aux1++)
-            new Layer(((String) lays.get(aux1)).toUpperCase());
-    }
+	public static Layer NWELL = new Layer("NWELL");
+
+	public Layer() {
+	}
+
+	private Layer(String name) {
+		super(name);
+		if (layers.get(name) == null)
+			layers.put(name, this);
+	}
 }

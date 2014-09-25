@@ -35,44 +35,45 @@ import java.awt.*;
 
 class CompPaint extends Canvas {
 
-    int width = 450, height = 300;
-    Dimension size = new Dimension(width, height);
-    Display1 disp;
+	int width = 450, height = 300;
+	Dimension size = new Dimension(width, height);
+	Display1 disp;
 
-    CompPaint(Display1 d) {
-        disp = d;
-    }
+	CompPaint(Display1 d) {
+		disp = d;
+	}
 
-    public Dimension getMinimumSize() {
-        return size;
-    }
+	@Override
+	public Dimension getMinimumSize() {
+		return size;
+	}
 
-    public Dimension getPreferredSize() {
-        return getMinimumSize();
-    }
+	@Override
+	public Dimension getPreferredSize() {
+		return getMinimumSize();
+	}
 
-    public void paint(Graphics g) {
+	@Override
+	public void paint(Graphics g) {
 
-        //        Clear the area
-        java.awt.Rectangle rec = g.getClipBounds();
-        g.clearRect(rec.x, rec.y, rec.width, rec.height);
+		//        Clear the area
+		java.awt.Rectangle rec = g.getClipBounds();
+		g.clearRect(rec.x, rec.y, rec.width, rec.height);
 
-        int aux2 = 0;
-        int aux1 = 0;
-        for (aux1 = 0; aux1 < disp.layer.size(); aux1++) {
-            if (!disp.showL.isIndexSelected(aux1)) continue;
-            LayerSetup stp = (LayerSetup) disp.layer.get(aux1);
+		int aux2 = 0;
+		int aux1 = 0;
+		for (aux1 = 0; aux1 < disp.layer.size(); aux1++) {
+			if (!disp.showL.isIndexSelected(aux1)) continue;
+			LayerSetup stp = (LayerSetup) disp.layer.get(aux1);
 
-            boolean fill = disp.fillL.isIndexSelected(aux1);
-            for (aux2 = 0; aux2 < disp.lst[aux1].size(); aux2++) {
-                ((Reg) disp.lst[aux1].get(aux2)).paint(g, disp.dx, disp.dy, disp.zoom, stp.color, fill, disp.area.getLy());
-            }
-        }
+			boolean fill = disp.fillL.isIndexSelected(aux1);
+			for (aux2 = 0; aux2 < disp.lst[aux1].size(); aux2++)
+				((Reg) disp.lst[aux1].get(aux2)).paint(g, disp.dx, disp.dy, disp.zoom, stp.color, fill, disp.area.getLy());
+		}
 
-        for (aux2 = 0; aux2 < disp.extras.size(); aux2++) {
-            ((Reg) disp.extras.get(aux2)).paint(g, disp.dx, disp.dy, disp.zoom, null, false, disp.area.getLy());
-        }
-        //this.size.setSize(disp.area.getLx(), disp.area.getLy());
-        this.size.setSize(width, height);
-    }
+		for (aux2 = 0; aux2 < disp.extras.size(); aux2++)
+			((Reg) disp.extras.get(aux2)).paint(g, disp.dx, disp.dy, disp.zoom, null, false, disp.area.getLy());
+		//this.size.setSize(disp.area.getLx(), disp.area.getLy());
+		size.setSize(width, height);
+	}
 }

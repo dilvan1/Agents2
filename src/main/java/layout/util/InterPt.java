@@ -35,40 +35,42 @@ import java.io.Serializable;
 
 public class InterPt implements Serializable {
 
-    boolean interFlag;
-    double t;
+	boolean interFlag;
+	double t;
 
-    public InterPt() {
-        interFlag = false;
-    }
+	public InterPt() {
+		interFlag = false;
+	}
 
-    public InterPt(boolean flag) {
-        interFlag = flag;
-    }
+	public InterPt(boolean flag) {
+		interFlag = flag;
+	}
 
-    public InterPt(boolean flag, double it) {
-        interFlag = flag;
-        t = it;
-    }
+	public InterPt(boolean flag, double it) {
+		interFlag = flag;
+		t = it;
+	}
 
-    public boolean equals(Object obj) {
-        try {
-            InterPt ipt = (InterPt) obj;
-            return (t == ipt.t && interFlag == ipt.interFlag);
-        } catch (Exception e) {
-            return false;
-        }
-    }
+	@Override
+	public boolean equals(Object obj) {
+		try {
+			InterPt ipt = (InterPt) obj;
+			return (t == ipt.t && interFlag == ipt.interFlag);
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
-    public double getT() {
-        return t;
-    }
+	public double getT() {
+		return t;
+	}
 
-    public boolean isIntersec() {
-        return interFlag;
-    }
+	public boolean isIntersec() {
+		return interFlag;
+	}
 
-    public String toString() {
-        return "InterPt = " + interFlag + " " + t + " ";
-    }
+	@Override
+	public String toString() {
+		return "InterPt = " + interFlag + " " + t + " ";
+	}
 }

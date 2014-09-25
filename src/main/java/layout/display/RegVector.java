@@ -35,23 +35,24 @@ import java.awt.*;
 
 class RegVector extends layout.util.Linea implements Reg {
 
-    Color c;
+	Color c;
 
-    public RegVector(int x1, int y1, int x2, int y2, Color c) {
-        super(x1, y1, x2, y2);
-        this.c = c;
-    }
+	public RegVector(int x1, int y1, int x2, int y2, Color c) {
+		super(x1, y1, x2, y2);
+		this.c = c;
+	}
 
-    public void paint(Graphics g, int dx, int dy, int zoom, Color color, boolean fill, int heightY) {
-        g.setColor(c);
-        g.drawLine(((c1.x + dx) * zoom) / 128, ((c1.y + dy) * zoom) / 128, ((c2.x + dx) * zoom) / 128, ((c2.y + dy) * zoom) / 128);
-        layout.util.Pt pt = getPointOfT(0.9);
-        if (isHorizontal()) {
-            g.drawLine(((pt.x + dx) * zoom) / 128, ((pt.y + 3 + dy) * zoom) / 128, ((c2.x + dx) * zoom) / 128, ((c2.y + dy) * zoom) / 128);
-            g.drawLine(((pt.x + dx) * zoom) / 128, ((pt.y - 3 + dy) * zoom) / 128, ((c2.x + dx) * zoom) / 128, ((c2.y + dy) * zoom) / 128);
-        } else {
-            g.drawLine(((pt.x + 3 + dx) * zoom) / 128, ((pt.y + dy) * zoom) / 128, ((c2.x + dx) * zoom) / 128, ((c2.y + dy) * zoom) / 128);
-            g.drawLine(((pt.x - 3 + dx) * zoom) / 128, ((pt.y + dy) * zoom) / 128, ((c2.x + dx) * zoom) / 128, ((c2.y + dy) * zoom) / 128);
-        }
-    }
+	@Override
+	public void paint(Graphics g, int dx, int dy, int zoom, Color color, boolean fill, int heightY) {
+		g.setColor(c);
+		g.drawLine(((c1.x + dx) * zoom) / 128, ((c1.y + dy) * zoom) / 128, ((c2.x + dx) * zoom) / 128, ((c2.y + dy) * zoom) / 128);
+		layout.util.Pt pt = getPointOfT(0.9);
+		if (isHorizontal()) {
+			g.drawLine(((pt.x + dx) * zoom) / 128, ((pt.y + 3 + dy) * zoom) / 128, ((c2.x + dx) * zoom) / 128, ((c2.y + dy) * zoom) / 128);
+			g.drawLine(((pt.x + dx) * zoom) / 128, ((pt.y - 3 + dy) * zoom) / 128, ((c2.x + dx) * zoom) / 128, ((c2.y + dy) * zoom) / 128);
+		} else {
+			g.drawLine(((pt.x + 3 + dx) * zoom) / 128, ((pt.y + dy) * zoom) / 128, ((c2.x + dx) * zoom) / 128, ((c2.y + dy) * zoom) / 128);
+			g.drawLine(((pt.x - 3 + dx) * zoom) / 128, ((pt.y + dy) * zoom) / 128, ((c2.x + dx) * zoom) / 128, ((c2.y + dy) * zoom) / 128);
+		}
+	}
 }

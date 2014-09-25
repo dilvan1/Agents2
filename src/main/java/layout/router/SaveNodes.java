@@ -37,58 +37,58 @@ import layout.comp.ElectricNode;
 import layout.util.Gen;
 
 class SaveNodes {
-    List saveRefs;
-    List saveAreas;
-    List saveNodes;
+	List saveRefs;
+	List saveAreas;
+	List saveNodes;
 
-    /**
-     * This method was created in VisualAge.
-     */
-    List getAreas() {
-        return saveAreas;
-    }
+	/**
+	 * This method was created in VisualAge.
+	 */
+	List getAreas() {
+		return saveAreas;
+	}
 
-    /**
-     * This method was created in VisualAge.
-     */
-    List getReferences() {
-        return saveRefs;
-    }
+	/**
+	 * This method was created in VisualAge.
+	 */
+	List getReferences() {
+		return saveRefs;
+	}
 
-    /**
-     * This method was created in VisualAge.
-     */
-    void restore(DesignCmp design) {
+	/**
+	 * This method was created in VisualAge.
+	 */
+	void restore(DesignCmp design) {
 
-        //        Put the old nodes back
-        for (int aux1 = 0; aux1 < saveRefs.size(); aux1++) {
-            ElectricNode node = (ElectricNode) design.getByReference(((Integer) saveRefs.get(aux1)).intValue());
-            node.setRoutingData(saveNodes.get(aux1));
-        }
-        saveRefs = null;
-        saveAreas = null;
-        saveNodes = null;
-    }
+		//        Put the old nodes back
+		for (int aux1 = 0; aux1 < saveRefs.size(); aux1++) {
+			ElectricNode node = (ElectricNode) design.getByReference(((Integer) saveRefs.get(aux1)).intValue());
+			node.setRoutingData(saveNodes.get(aux1));
+		}
+		saveRefs = null;
+		saveAreas = null;
+		saveNodes = null;
+	}
 
-    /**
-     * This method was created in VisualAge.
-     *
-     * param node ElectricNode
-     */
-    void unwire(DesignCmp design, List wireLst, List areaLst) {
+	/**
+	 * This method was created in VisualAge.
+	 *
+	 * param node ElectricNode
+	 */
+	void unwire(DesignCmp design, List wireLst, List areaLst) {
 
-        //	Test to see if space empty
-        if (saveRefs != null || saveNodes != null)
-            throw new RuntimeException("SaveNode not empty.");
+		//	Test to see if space empty
+		if (saveRefs != null || saveNodes != null)
+			throw new RuntimeException("SaveNode not empty.");
 
-        saveRefs = wireLst;
-        saveAreas = areaLst;
-        saveNodes = Gen.newList(wireLst.size());
-        //        Save a copy of the nodes and unwire them
-        for (int aux1 = 0; aux1 < saveRefs.size(); aux1++) {
-            ElectricNode node = (ElectricNode) design.getByReference(((Integer) saveRefs.get(aux1)).intValue());
-            saveNodes.add(node.getRoutingData());
-            node.unwire();
-        }
-    }
+		saveRefs = wireLst;
+		saveAreas = areaLst;
+		saveNodes = Gen.newList(wireLst.size());
+		//        Save a copy of the nodes and unwire them
+		for (int aux1 = 0; aux1 < saveRefs.size(); aux1++) {
+			ElectricNode node = (ElectricNode) design.getByReference(((Integer) saveRefs.get(aux1)).intValue());
+			saveNodes.add(node.getRoutingData());
+			node.unwire();
+		}
+	}
 }

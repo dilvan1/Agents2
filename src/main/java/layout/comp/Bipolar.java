@@ -38,80 +38,76 @@ import java.io.Writer;
 
 public class Bipolar extends Component {
 
-    public static Symbol COLECTOR = new Symbol("COLECTOR");
-    public static Symbol BASE = new Symbol("BASE");
-    public static Symbol EMITER = new Symbol("EMITER");
+	public static Symbol COLECTOR = new Symbol("COLECTOR");
+	public static Symbol BASE = new Symbol("BASE");
+	public static Symbol EMITER = new Symbol("EMITER");
 
-    public static Symbol PNP = new Symbol("PNP");
-    public static Symbol NPN = new Symbol("NPN");
+	public static Symbol PNP = new Symbol("PNP");
+	public static Symbol NPN = new Symbol("NPN");
 
-    Symbol tecn;
+	Symbol tecn;
 
-    public Bipolar(int refI, int numI, Symbol tecI) {
-        super(refI, numI);
-        tecn = tecI;
-    }
+	public Bipolar(int refI, int numI, Symbol tecI) {
+		super(refI, numI);
+		tecn = tecI;
+	}
 
-    @Override
-    public void drawOut(layout.display.Display out) {
-        super.drawOut(out);
-        layout.util.Rectangle env = getEnvelope();
-        out.addLabel(String.valueOf(reference), env.c1);
-    }
+	@Override
+	public void drawOut(layout.display.Display out) {
+		super.drawOut(out);
+		layout.util.Rectangle env = getEnvelope();
+		out.addLabel(String.valueOf(reference), env.c1);
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        try {
-            return (super.equals(obj) && tecn.equals(((Bipolar) obj).tecn));
-        } catch (Exception e) {
-            return false;
-        }
-    }
+	@Override
+	public boolean equals(Object obj) {
+		try {
+			return (super.equals(obj) && tecn.equals(((Bipolar) obj).tecn));
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
-    @Override
-    public void printEdif(Writer out) throws IOException {
+	@Override
+	public void printEdif(Writer out) throws IOException {
 
-        out.write("      (cell " + name + "\n" +
-                "         (userData cellFunction " + tecn + ")" + "\n" +
-                "         (view maskLayout Physical" + "\n" +
-                "            (interface" + "\n" +
-                "               (declare input port base)" + "\n" +
-                "               (declare inout port (list colector emiter))" + "\n" +
-                "               (portImplementation base" + "\n");
+		out.write("      (cell " + name + "\n" +
+				"         (userData cellFunction " + tecn + ")" + "\n" +
+				"         (view maskLayout Physical" + "\n" +
+				"            (interface" + "\n" +
+				"               (declare input port base)" + "\n" +
+				"               (declare inout port (list colector emiter))" + "\n" +
+				"               (portImplementation base" + "\n");
 
-        for (int aux1 = 0; aux1 < getTerms().at(Bipolar.BASE).getBody().size(); aux1++) {
-            getTerms().at(Bipolar.BASE).getBody().at(aux1).printEdif(out);
-        }
+		for (Wire w : getTerms().get(Bipolar.BASE).getBody())
+			w.printEdif(out);
 
-        out.write("               ) \n" +
-                "               (portImplementation colector \n");
+		out.write("               ) \n" +
+				"               (portImplementation colector \n");
 
-        for (int aux1 = 0; aux1 < getTerms().at(Bipolar.COLECTOR).getBody().size(); aux1++) {
-            getTerms().at(Bipolar.COLECTOR).getBody().at(aux1).printEdif(out);
-        }
+		for (Wire w : getTerms().get(Bipolar.COLECTOR).getBody())
+			w.printEdif(out);
 
-        out.write("               ) \n" +
-                "               (portImplementation emiter \n");
+		out.write("               ) \n" +
+				"               (portImplementation emiter \n");
 
-        for (int aux1 = 0; aux1 < getTerms().at(Bipolar.EMITER).getBody().size(); aux1++) {
-            getTerms().at(Bipolar.EMITER).getBody().at(aux1).printEdif(out);
-        }
+		for (Wire w : getTerms().get(Bipolar.EMITER).getBody())
+			w.printEdif(out);
 
-        out.write("               ) \n" +
-                "            ) \n" +
-                "            (contents \n");
+		out.write("               ) \n" +
+				"            ) \n" +
+				"            (contents \n");
 
-        for (int aux1 = 0; aux1 < getBody().size(); aux1++) {
-            getBody().at(aux1).printEdif(out);
-        }
+		for (Wire w : getBody())
+			w.printEdif(out);
 
-        out.write("            ) \n" +
-                "         ) \n" +
-                "      ) \n");
-    }
+		out.write("            ) \n" +
+				"         ) \n" +
+				"      ) \n");
+	}
 
-    @Override
-    public String toString() {
-        return "Bipolar Tecn- " + tecn + "\n" + super.toString();
-    }
+	@Override
+	public String toString() {
+		return "Bipolar Tecn- " + tecn + "\n" + super.toString();
+	}
 }

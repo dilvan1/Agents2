@@ -35,97 +35,97 @@ import layout.util.Gen;
 import layout.util.List;
 
 class Gene {
-    /*-
-     *                   Gene = [ [2  FLIP         [1 2 4 3]         dx  dy gap ] ... ]
-     *                 groupNumber-|  |-Flip flag  |- order of lines |   |   |- Gap between the groups parts
-     *                                                               |   |- Y coord of the group
-     *                                                               |- X coord of the group
-     */
-    private int groupNumber;
-    private boolean flip;
-    private List linesOrder;
-    private int dx;
-    private int dy;
-    private int gap;
+	/*-
+	 *                   Gene = [ [2  FLIP         [1 2 4 3]         dx  dy gap ] ... ]
+	 *                 groupNumber-|  |-Flip flag  |- order of lines |   |   |- Gap between the groups parts
+	 *                                                               |   |- Y coord of the group
+	 *                                                               |- X coord of the group
+	 */
+	private final int groupNumber;
+	private boolean flip;
+	private final List linesOrder;
+	private int dx;
+	private int dy;
+	private int gap;
 
-    /**
-     * This type was created in VisualAge.
-     */
-    Gene(int groupNumber, boolean flip, List linesOrder, int dx, int dy, int gap) {
-        this.groupNumber = groupNumber;
-        this.flip = flip;
-        this.linesOrder = linesOrder;
-        this.dx = dx;
-        this.dy = dy;
-        this.gap = gap;
-    }
+	/**
+	 * This method was created in VisualAge.
+	 */
+	Gene(Gene gene) {
 
-    /**
-     * This method was created in VisualAge.
-     */
-    Gene(Gene gene) {
+		groupNumber = gene.groupNumber;
+		flip = gene.flip;
+		//this.linesOrder= linesOrder;
+		dx = gene.dx;
+		dy = gene.dy;
+		gap = gene.gap;
 
-        this.groupNumber = gene.groupNumber;
-        this.flip = gene.flip;
-        //this.linesOrder= linesOrder;
-        this.dx = gene.dx;
-        this.dy = gene.dy;
-        this.gap = gene.gap;
+		linesOrder = Gen.newList();
+		for (int aux1 = 0; aux1 < gene.linesOrder.size(); aux1++)
+			linesOrder.add(new Integer(((Number) gene.linesOrder.get(aux1)).intValue()));
+	}
 
-        linesOrder = Gen.newList();
-        for (int aux1 = 0; aux1 < gene.linesOrder.size(); aux1++)
-            linesOrder.add(new Integer(((Number) gene.linesOrder.get(aux1)).intValue()));
-    }
+	/**
+	 * This type was created in VisualAge.
+	 */
+	Gene(int groupNumber, boolean flip, List linesOrder, int dx, int dy, int gap) {
+		this.groupNumber = groupNumber;
+		this.flip = flip;
+		this.linesOrder = linesOrder;
+		this.dx = dx;
+		this.dy = dy;
+		this.gap = gap;
+	}
 
-    int getDx() {
-        return dx;
-    }
+	int getDx() {
+		return dx;
+	}
 
-    int getDy() {
-        return dy;
-    }
+	int getDy() {
+		return dy;
+	}
 
-    boolean getFlip() {
-        return flip;
-    }
+	boolean getFlip() {
+		return flip;
+	}
 
-    int getGap() {
-        return gap;
-    }
+	int getGap() {
+		return gap;
+	}
 
-    int getGroupNumber() {
-        return groupNumber;
-    }
+	int getGroupNumber() {
+		return groupNumber;
+	}
 
-    List getLinesOrder() {
-        return linesOrder;
-    }
+	List getLinesOrder() {
+		return linesOrder;
+	}
 
-    /**
-     * This method was created in VisualAge.
-     */
-    void setDx(int dx) {
-        this.dx = dx;
-    }
+	/**
+	 * This method was created in VisualAge.
+	 */
+	 void setDx(int dx) {
+		 this.dx = dx;
+	 }
 
-    /**
-     * This method was created in VisualAge.
-     */
-    void setDy(int dy) {
-        this.dy = dy;
-    }
+	 /**
+	  * This method was created in VisualAge.
+	  */
+	 void setDy(int dy) {
+		 this.dy = dy;
+	 }
 
-    /**
-     * This method was created in VisualAge.
-     */
-    void setFlip(boolean flip) {
-        this.flip = flip;
-    }
+	 /**
+	  * This method was created in VisualAge.
+	  */
+	 void setFlip(boolean flip) {
+		 this.flip = flip;
+	 }
 
-    /**
-     * This method was created in VisualAge.
-     */
-    void setGap(int gap) {
-        this.gap = gap;
-    }
+	 /**
+	  * This method was created in VisualAge.
+	  */
+	 void setGap(int gap) {
+		 this.gap = gap;
+	 }
 }

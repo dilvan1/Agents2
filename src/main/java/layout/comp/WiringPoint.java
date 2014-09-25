@@ -32,37 +32,37 @@ package layout.comp;
  */
 
 public class WiringPoint {
-    double dist;
-    int ele1;
-    int ele2;
-    int wire1;
-    int wire2;
+	double dist;
+	int ele1;
+	int ele2;
+	int wire1;
+	int wire2;
 
-    public WiringPoint() {
-        dist = -100000;
-        ele1 = 0;
-        ele2 = 0;
-        wire1 = -1;
-        wire2 = -1;
-    }
+	public WiringPoint() {
+		dist = -100000;
+		ele1 = 0;
+		ele2 = 0;
+		wire1 = -1;
+		wire2 = -1;
+	}
 
-    public double getDist() {
-        return dist;
-    }
+	public double getDist() {
+		return dist;
+	}
 
-    public int getWire1() {
-        return wire1;
-    }
+	public int getWire1() {
+		return wire1;
+	}
 
-    public int getWire2() {
-        return wire2;
-    }
+	public int getWire2() {
+		return wire2;
+	}
 
-    public int getWirePt1() {
-        return ele1;
-    }
+	public int getWirePt1() {
+		return ele1;
+	}
 
-    public int getWirePt2() {
-        return ele2;
-    }
+	public int getWirePt2() {
+		return ele2;
+	}
 }

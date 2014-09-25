@@ -34,15 +34,15 @@ package layout.display;
 import java.awt.*;
 
 class LayerSetup {
-    String layer;
-    Color color;
-    boolean show;
-    boolean fill;
+	String layer;
+	Color color;
+	boolean show;
+	boolean fill;
 
-    public LayerSetup(String l1, Color c1, boolean s1, boolean f1) {
-        layer = l1;
-        color = c1;
-        show = s1;
-        fill = f1;
-    }
+	public LayerSetup(String l1, Color c1, boolean s1, boolean f1) {
+		layer = l1;
+		color = c1;
+		show = s1;
+		fill = f1;
+	}
 }

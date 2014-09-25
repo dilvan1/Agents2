@@ -36,75 +36,75 @@ import layout.comp.Layer;
 import layout.util.Pt;
 
 class Operator {
-    String name;
-    private Pt direction;
-    int distance;
-    String type;
-    String stype;
-    int component;
-    int wire;
-    int element;
-    Layer fromLayer;
-    Layer layer;
-    String ret;
+	String name;
+	private Pt direction;
+	int distance;
+	String type;
+	String stype;
+	int component;
+	int wire;
+	int element;
+	Layer fromLayer;
+	Layer layer;
+	String ret;
 
-    //public void addPropertyChangeListener(PropertyChangeListener l) {}
-    //public void removePropertyChangeListener(PropertyChangeListener l) {}
-    Operator(String name) {
-        this.name = name;
-    }
+	//public void addPropertyChangeListener(PropertyChangeListener l) {}
+	//public void removePropertyChangeListener(PropertyChangeListener l) {}
+	Operator(String name) {
+		this.name = name;
+	}
 
-    Operator(String name, Layer layer) {
-        this.name = name;
-        this.layer = layer;
-    }
+	Operator(String name, Layer layer) {
+		this.name = name;
+		this.layer = layer;
+	}
 
-    Operator(String name, Pt direction) {
-        this.name = name;
-        this.direction = new Pt(direction);
-    }
+	Operator(String name, Pt direction) {
+		this.name = name;
+		this.direction = new Pt(direction);
+	}
 
-    public int getComponent() {
-        return component;
-    }
+	public int getComponent() {
+		return component;
+	}
 
-    public Pt getDirection() {
-        return direction;
-    }
+	public Pt getDirection() {
+		return direction;
+	}
 
-    public int getDistance() {
-        return distance;
-    }
+	public int getDistance() {
+		return distance;
+	}
 
-    public int getElement() {
-        return element;
-    }
+	public int getElement() {
+		return element;
+	}
 
-    public Layer getFromLayer() {
-        return fromLayer;
-    }
+	public Layer getFromLayer() {
+		return fromLayer;
+	}
 
-    public Layer getLayer() {
-        return layer;
-    }
+	public Layer getLayer() {
+		return layer;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getReturn() {
-        return ret;
-    }
+	public String getReturn() {
+		return ret;
+	}
 
-    public String getStype() {
-        return stype;
-    }
+	public String getStype() {
+		return stype;
+	}
 
-    public String getType() {
-        return type;
-    }
+	public String getType() {
+		return type;
+	}
 
-    public int getWire() {
-        return wire;
-    }
+	public int getWire() {
+		return wire;
+	}
 }

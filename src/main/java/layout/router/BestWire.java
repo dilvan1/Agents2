@@ -38,44 +38,44 @@ import layout.util.List;
 
 class BestWire {
 
-    volatile private int cost;
-    private Wire wire;
-    private int net;
-    private List unwired;
+	volatile private int cost;
+	private final Wire wire;
+	private final int net;
+	private List unwired;
 
-    public BestWire(Wire wire, int net, int cost) {
-        this.wire = wire;
-        this.net = net;
-        this.cost = cost;
-    }
+	/**
+	 * BestWire constructor comment.
+	 */
+	public BestWire(BestWire best, List unwired) {
+		wire = best.wire;
+		net = best.net;
+		cost = best.cost;
+		this.unwired = unwired;
+	}
 
-    /**
-     * BestWire constructor comment.
-     */
-    public BestWire(BestWire best, List unwired) {
-        this.wire = best.wire;
-        this.net = best.net;
-        this.cost = best.cost;
-        this.unwired = unwired;
-    }
+	public BestWire(Wire wire, int net, int cost) {
+		this.wire = wire;
+		this.net = net;
+		this.cost = cost;
+	}
 
-    public int getCost() {
-        return cost;
-    }
+	public int getCost() {
+		return cost;
+	}
 
-    public int getNet() {
-        return net;
-    }
+	public int getNet() {
+		return net;
+	}
 
-    /**
-     * Insert the method's description here.
-     * Creation date: (9/17/2000 11:28:34 AM)
-     */
-    public List getUnwired() {
-        return unwired;
-    }
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (9/17/2000 11:28:34 AM)
+	 */
+	public List getUnwired() {
+		return unwired;
+	}
 
-    public Wire getWire() {
-        return wire;
-    }
+	public Wire getWire() {
+		return wire;
+	}
 }

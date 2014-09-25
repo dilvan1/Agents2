@@ -39,47 +39,47 @@ import layout.util.Pt;
 import layout.util.Rectangle;
 
 class RouterData {
-    DesignCmp design;
-    ElectricNode node;
-    int subnet1;
-    Rectangle envlp2;
-    int changeCost;
-    Pt targetPoint;
-    int averageCost;
-    //int           bestCost;
-    int minCost;
+	DesignCmp design;
+	ElectricNode node;
+	int subnet1;
+	Rectangle envlp2;
+	int changeCost;
+	Pt targetPoint;
+	int averageCost;
+	//int           bestCost;
+	int minCost;
 
-    //    public void addPropertyChangeListener(PropertyChangeListener l) {}
-//    public void removePropertyChangeListener(PropertyChangeListener l) {}
-    public int getAverageCost() {
-        return averageCost;
-    }
+	//    public void addPropertyChangeListener(PropertyChangeListener l) {}
+	//    public void removePropertyChangeListener(PropertyChangeListener l) {}
+	public int getAverageCost() {
+		return averageCost;
+	}
 
-    public int getChangeCost() {
-        return changeCost;
-    }
+	public int getChangeCost() {
+		return changeCost;
+	}
 
-    public DesignCmp getDesign() {
-        return design;
-    }
+	public DesignCmp getDesign() {
+		return design;
+	}
 
-    public Rectangle getEnvlp2() {
-        return envlp2;
-    }
+	public Rectangle getEnvlp2() {
+		return envlp2;
+	}
 
-    public int getMinCost() {
-        return minCost;
-    }
+	public int getMinCost() {
+		return minCost;
+	}
 
-    public ElectricNode getNode() {
-        return node;
-    }
+	public ElectricNode getNode() {
+		return node;
+	}
 
-    public int getSubnet1() {
-        return subnet1;
-    }
+	public int getSubnet1() {
+		return subnet1;
+	}
 
-    public Pt getTargetPoint() {
-        return targetPoint;
-    }
+	public Pt getTargetPoint() {
+		return targetPoint;
+	}
 }

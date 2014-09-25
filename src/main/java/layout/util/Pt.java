@@ -38,80 +38,82 @@ import java.io.Serializable;
 
 public class Pt implements Serializable {
 
-    public int x, y;
+	public int x, y;
 
-    public Pt() {
-        x = 0;
-        y = 0;
-    }
+	public Pt() {
+		x = 0;
+		y = 0;
+	}
 
-    public Pt(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
+	public Pt(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
 
-    public Pt(Pt pt) {
-        x = pt.x;
-        y = pt.y;
-    }
+	public Pt(Pt pt) {
+		x = pt.x;
+		y = pt.y;
+	}
 
-    public boolean equals(Object obj) {
-        try {
-            Pt pt = (Pt) obj;
-            return (x == pt.x && y == pt.y);
-        } catch (Exception e) {
-            return false;
-        }
-    }
+	@Override
+	public boolean equals(Object obj) {
+		try {
+			Pt pt = (Pt) obj;
+			return (x == pt.x && y == pt.y);
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
-    public int getManhattanDistance(Pt p1) {
-        return (Math.abs(x - p1.x) + Math.abs(y - p1.y));
-    }
+	public int getManhattanDistance(Pt p1) {
+		return (Math.abs(x - p1.x) + Math.abs(y - p1.y));
+	}
 
-    public void mirrorX() {
-        y = -y;
-    }
+	public void mirrorX() {
+		y = -y;
+	}
 
-    public void mirrorY() {
-        x = -x;
-    }
+	public void mirrorY() {
+		x = -x;
+	}
 
-    public void rotate(int x, int y) {
-        int aux;
-        if (x == 0 && y > 0) {
-            aux = this.x;
-            this.x = -this.y;
-            this.y = aux;
-        } else if (x < 0 && y == 0) {
-            this.x = -this.x;
-            this.y = -this.y;
-        } else if (x == 0 && y < 0) {
-            aux = this.x;
-            this.x = this.y;
-            this.y = -aux;
-        } else
-            throw new RuntimeException("Illegal rotation values");
-        return;
-    }
+	public void rotate(int x, int y) {
+		int aux;
+		if (x == 0 && y > 0) {
+			aux = this.x;
+			this.x = -this.y;
+			this.y = aux;
+		} else if (x < 0 && y == 0) {
+			this.x = -this.x;
+			this.y = -this.y;
+		} else if (x == 0 && y < 0) {
+			aux = this.x;
+			this.x = this.y;
+			this.y = -aux;
+		} else
+			throw new RuntimeException("Illegal rotation values");
+		return;
+	}
 
-    public void rotate90() {
-        int x;
-        x = this.x;
-        this.x = -this.y;
-        this.y = x;
-    }
+	public void rotate90() {
+		int x;
+		x = this.x;
+		this.x = -y;
+		y = x;
+	}
 
-    public void set(Pt pt) {
-        x = pt.x;
-        y = pt.y;
-    }
+	public void set(Pt pt) {
+		x = pt.x;
+		y = pt.y;
+	}
 
-    public String toString() {
-        return "(" + x + "," + y + ")";
-    }
+	@Override
+	public String toString() {
+		return "(" + x + "," + y + ")";
+	}
 
-    public void translate(int x1, int y1) {
-        x = x + x1;
-        y = y + y1;
-    }
+	public void translate(int x1, int y1) {
+		x = x + x1;
+		y = y + y1;
+	}
 }

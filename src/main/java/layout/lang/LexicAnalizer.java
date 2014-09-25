@@ -30,12 +30,12 @@ package layout.lang;
 /////////////////////////////////////////////////////////////////////////////////////
 //
 //                     General library for reading files in any language
-//    Derived from version on C (UNICAMP 11/08/90) derived from Prolog 
+//    Derived from version on C (UNICAMP 11/08/90) derived from Prolog
 //                        (UNICAMP 29/01/90)
 //
 //                      UKC 29/09/91 - spicelib
 //                      UKC 30/11/92
-//                Versao Java UNICAMP 31/05/96 
+//                Versao Java UNICAMP 31/05/96
 //
 
 import java.io.IOException;
@@ -43,238 +43,237 @@ import java.io.InputStream;
 
 public class LexicAnalizer {
 
-    private int BIGGEST_WORD = 1024;
-    private InputStream inpStream;
-    private StringBuffer palavra = new StringBuffer();
-    private String lexicClass;
-    private int intNumber;
+	public static boolean beginComment(char caracter) {
+		return (caracter == ';');
+	}
+	public static boolean blanc(char caracter) {
+		switch (caracter) {
+		case ' ':
+		case '\n':
+		case '\r':
+		case '\f':
+		case '\b':
+		case '\t':
+			return true;
+		}
+		return false;
+	}
+	public static boolean endComment(char caracter) {
+		return (caracter == '\n');
+	}
+	public static boolean eof(char caracter) {
+		return (caracter == ((char) (-1)));
+	}
+	public static boolean letter(char caracter) {
+		if ((caracter >= 'A') && (caracter <= 'Z')) return true;
+		if ((caracter >= '0') && (caracter <= '9')) return true;
+		if ((caracter >= 'a') && (caracter <= 'z')) return true;
+		switch (caracter) {
+		case '_':
+		case '-':
+		case '.':
+			return true;
+		}
+		return false;
+	}
 
-    private boolean putBackFlag = false;
-    private char putBackChar;
+	public static boolean number(char caracter) {
+		switch (caracter) {
+		case '0':
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case '9':
+		case '-':
+			return true;
+		}
+		return false;
+	}
+	public static boolean realNumber(char caracter) {
+		switch (caracter) {
+		case '0':
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case '9':
+		case 'E':
+		case 'e':
+		case '-':
+		case '.':
+			return true;
+		}
+		return false;
+	}
 
-    public LexicAnalizer(InputStream is) {
-        inpStream = is;
-    }
+	private final int BIGGEST_WORD = 1024;
 
-    public static boolean beginComment(char caracter) {
-        return (caracter == ';');
-    }
+	private InputStream inpStream;
 
-    public static boolean blanc(char caracter) {
-        switch (caracter) {
-            case ' ':
-            case '\n':
-            case '\r':
-            case '\f':
-            case '\b':
-            case '\t':
-                return true;
-        }
-        return false;
-    }
+	private final StringBuffer palavra = new StringBuffer();
 
-    public static boolean endComment(char caracter) {
-        return (caracter == '\n');
-    }
+	private String lexicClass;
 
-    public static boolean eof(char caracter) {
-        return (caracter == ((char) ((int) -1)));
-    }
+	private int intNumber;
 
-    private char getChar() throws IOException, LangException {
-        char c;
+	private boolean putBackFlag = false;
 
-        if (putBackFlag) {
-            c = putBackChar;
-            putBackFlag = false;
-        } else {
-            c = (char) inpStream.read();
-            //System.out.print(c);
-            //System.out.flush();
-        }
-        return c;
-    }
+	private char putBackChar;
 
-    public int integer() {
-        return intNumber;
-    }
+	public LexicAnalizer(InputStream is) {
+		inpStream = is;
+	}
 
-    public static boolean letter(char caracter) {
-        if ((caracter >= 'A') && (caracter <= 'Z')) return true;
-        if ((caracter >= '0') && (caracter <= '9')) return true;
-        if ((caracter >= 'a') && (caracter <= 'z')) return true;
-        switch (caracter) {
-            case '_':
-            case '-':
-            case '.':
-                return true;
-        }
-        return false;
-    }
+	private char getChar() throws IOException, LangException {
+		char c;
 
-    public String lexicClass() {
-        return lexicClass;
-    }
+		if (putBackFlag) {
+			c = putBackChar;
+			putBackFlag = false;
+		} else
+			c = (char) inpStream.read();
+		//System.out.print(c);
+		//System.out.flush();
+		return c;
+	}
 
-    public static boolean number(char caracter) {
-        switch (caracter) {
-            case '0':
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9':
-            case '-':
-                return true;
-        }
-        return false;
-    }
+	public int integer() {
+		return intNumber;
+	}
 
-    private void putBack(char c) {
-        putBackFlag = true;
-        putBackChar = c;
-    }
+	public String lexicClass() {
+		return lexicClass;
+	}
 
-    public void read() throws IOException, LangException {
-        read("");
-    }
+	private void putBack(char c) {
+		putBackFlag = true;
+		putBackChar = c;
+	}
 
-    public void read(String expected) throws IOException, LangException {
-        char caracter;
-        long aux1;
+	public void read() throws IOException, LangException {
+		read("");
+	}
 
-        palavra.setLength(0);
-        caracter = getChar();
-        while (blanc(caracter) || beginComment(caracter)) {
-            if (beginComment(caracter)) {
-                while (!endComment(caracter) && !eof(caracter))
-                    caracter = getChar();  // Takes out the comments
-                caracter = getChar();
-            }
-            while (blanc(caracter)) caracter = getChar();   // Takes out the blancs
-        }
+	public void read(String expected) throws IOException, LangException {
+		char caracter;
+		long aux1;
 
-        // Begin the lexical procedure
+		palavra.setLength(0);
+		caracter = getChar();
+		while (blanc(caracter) || beginComment(caracter)) {
+			if (beginComment(caracter)) {
+				while (!endComment(caracter) && !eof(caracter))
+					caracter = getChar();  // Takes out the comments
+					caracter = getChar();
+			}
+			while (blanc(caracter)) caracter = getChar();   // Takes out the blancs
+		}
 
-	  /* STRING */
-        if (caracter == '"') {
-            aux1 = 0;
-            caracter = getChar();
-            while (caracter != '"') {
-                caracter = getChar();
-                if (caracter == '\\') {
-                    char carac2 = getChar();
-                    switch (carac2) {
-                        case 'n':
-                            caracter = '\n';
-                            break;
-                        case '"':
-                            caracter = '"';
-                            break;
-                        case 'r':
-                            caracter = '\r';
-                            break;
-                        case 't':
-                            caracter = '\t';
-                            break;
-                        case '0':
-                            caracter = '\0';
-                            break;
-                        default:
-                            palavra.append('\\');
-                            aux1++;
-                            caracter = carac2;
-                    }
-                }
-                palavra.append(caracter);
-                aux1++;
-                if (aux1 >= BIGGEST_WORD)
-                    throw new LangException("String too big");
-            }
-            lexicClass = "STRING";
-        } else
+		// Begin the lexical procedure
 
-	  /* INTEGER */
-            if (number(caracter)) {
-                aux1 = 0;
-                do {
-                    palavra.append(caracter);
-                    aux1++;
-                    if (aux1 >= BIGGEST_WORD)
-                        throw new LangException("Number too big");
-                    caracter = getChar();
-                } while (number(caracter));
-                try {
-                    intNumber = Integer.parseInt(palavra.toString());
-                } catch (NumberFormatException aux) {
-                    throw new LangException("Ill formed integer: \"" + palavra.toString() + "\"");
-                }
-                lexicClass = "INTEGER";
-                putBack(caracter);
-//System.out.print("INTEGER " + palavra + " " + intNumber);
-            } else
+		/* STRING */
+		if (caracter == '"') {
+			aux1 = 0;
+			caracter = getChar();
+			while (caracter != '"') {
+				caracter = getChar();
+				if (caracter == '\\') {
+					char carac2 = getChar();
+					switch (carac2) {
+					case 'n':
+						caracter = '\n';
+						break;
+					case '"':
+						caracter = '"';
+						break;
+					case 'r':
+						caracter = '\r';
+						break;
+					case 't':
+						caracter = '\t';
+						break;
+					case '0':
+						caracter = '\0';
+						break;
+					default:
+						palavra.append('\\');
+						aux1++;
+						caracter = carac2;
+					}
+				}
+				palavra.append(caracter);
+				aux1++;
+				if (aux1 >= BIGGEST_WORD)
+					throw new LangException("String too big");
+			}
+			lexicClass = "STRING";
+		} else
 
-   /*  WORDS */
-                if (letter(caracter)) {
-                    aux1 = 0;
-                    do {
-                        palavra.append(caracter);
-                        aux1++;
-                        if (aux1 >= BIGGEST_WORD)
-                            throw new LangException("Name too big");
-                        caracter = getChar();
-                    } while (letter(caracter));
-                    lexicClass = "WORD";
-                    putBack(caracter);
-//System.out.print("WORD " + palavra + " " + intNumber);
-                } else
+			/* INTEGER */
+			if (number(caracter)) {
+				aux1 = 0;
+				do {
+					palavra.append(caracter);
+					aux1++;
+					if (aux1 >= BIGGEST_WORD)
+						throw new LangException("Number too big");
+					caracter = getChar();
+				} while (number(caracter));
+				try {
+					intNumber = Integer.parseInt(palavra.toString());
+				} catch (NumberFormatException aux) {
+					throw new LangException("Ill formed integer: \"" + palavra.toString() + "\"");
+				}
+				lexicClass = "INTEGER";
+				putBack(caracter);
+				//System.out.print("INTEGER " + palavra + " " + intNumber);
+			} else
 
-	  /* EOF */
-                    if (eof(caracter)) {
-                        lexicClass = "EOF";
-                    } else {
+				/*  WORDS */
+				if (letter(caracter)) {
+					aux1 = 0;
+					do {
+						palavra.append(caracter);
+						aux1++;
+						if (aux1 >= BIGGEST_WORD)
+							throw new LangException("Name too big");
+						caracter = getChar();
+					} while (letter(caracter));
+					lexicClass = "WORD";
+					putBack(caracter);
+					//System.out.print("WORD " + palavra + " " + intNumber);
+				} else
 
-	  /* SIMBOL */
-                        lexicClass = "SYMBOL";
-                        palavra.append(caracter);
-                    }
+					/* EOF */
+					if (eof(caracter))
+						lexicClass = "EOF";
+					else {
 
-        // Test for expected class
-        //
-        if (!expected.equals("") && !lexicClass.equals(expected))
-            throw new LangException(expected + " expected");
-    }
+						/* SIMBOL */
+						lexicClass = "SYMBOL";
+						palavra.append(caracter);
+					}
 
-    public static boolean realNumber(char caracter) {
-        switch (caracter) {
-            case '0':
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9':
-            case 'E':
-            case 'e':
-            case '-':
-            case '.':
-                return true;
-        }
-        return false;
-    }
+		// Test for expected class
+		//
+		if (!expected.equals("") && !lexicClass.equals(expected))
+			throw new LangException(expected + " expected");
+	}
 
-    public void setInputStream(InputStream is) {
-        inpStream = is;
-    }
+	public void setInputStream(InputStream is) {
+		inpStream = is;
+	}
 
-    public String word() {
-        return palavra.toString();
-    }
+	public String word() {
+		return palavra.toString();
+	}
 }

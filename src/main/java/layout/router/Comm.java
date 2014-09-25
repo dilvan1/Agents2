@@ -42,89 +42,90 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class Comm extends Thread {
-    Socket soc;
+	Socket soc;
 
-    /**
-     * Comm constructor comment.
-     */
-    public Comm(String name, Socket soc) {
-        super(name);
-        this.soc = soc;
-    }
+	/**
+	 * Comm constructor comment.
+	 */
+	public Comm(String name, Socket soc) {
+		super(name);
+		this.soc = soc;
+	}
 
-    /**
-     * Insert the method's description here.
-     * Creation date: (10/13/2000 5:39:46 PM)
-     */
-    public void run() {
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (10/13/2000 5:39:46 PM)
+	 */
+	@Override
+	public void run() {
 
-        //	Route circuits
-        try {
-            ObjectInputStream in = new ObjectInputStream(soc.getInputStream());
-            ObjectOutputStream out = new ObjectOutputStream(soc.getOutputStream());
+		//	Route circuits
+		try {
+			ObjectInputStream in = new ObjectInputStream(soc.getInputStream());
+			ObjectOutputStream out = new ObjectOutputStream(soc.getOutputStream());
 
-            //Loop to route the circuits
-            while (true) {
-                Object obj = in.readObject();
+			//Loop to route the circuits
+			while (true) {
+				Object obj = in.readObject();
 
-                //	Commands
-                if (obj instanceof String) {
-                    String comm = (String) obj;
+				//	Commands
+				if (obj instanceof String) {
+					String comm = (String) obj;
 
-                    //	Shutdown
-                    if (comm.equals("SHUTDOWN")) {
-                        soc.close();
-                        System.exit(0);
-                    }
+					//	Shutdown
+					if (comm.equals("SHUTDOWN")) {
+						soc.close();
+						System.exit(0);
+					}
 
-                    //	Stop
-                    if (comm.equals("STOP")) {
-                        soc.close();
-                        return;
-                    }
+					//	Stop
+					if (comm.equals("STOP")) {
+						soc.close();
+						return;
+					}
 
-                    //	Is ready?
-                    if (comm.equals("READY")) {
-                        if (Consultant.db == null)
-                            out.writeObject("MISSING CONSULTANT");
-                        else
-                            out.writeObject("OK");
-                        continue;
-                    }
-                }
+					//	Is ready?
+					if (comm.equals("READY")) {
+						if (Consultant.db == null)
+							out.writeObject("MISSING CONSULTANT");
+						else
+							out.writeObject("OK");
+						continue;
+					}
+				}
 
-                //	Consultant
-                if (obj instanceof Consultant) {
-                    if (Consultant.db != null) {
-                        out.writeObject(new RuntimeException("Consultant already installed."));
-                        continue;
-                    }
-                    Consultant.db = (Consultant) obj;
-                    out.writeObject("OK");
-                    //    Get the layers names and create them.
-                    Layer.makeLayers(Consultant.db.getLayersNames());
-                    System.out.println("Consultant read.");
-                    continue;
-                }
+				//	Consultant
+				if (obj instanceof Consultant) {
+					if (Consultant.db != null) {
+						out.writeObject(new RuntimeException("Consultant already installed."));
+						continue;
+					}
+					Consultant.db = (Consultant) obj;
+					out.writeObject("OK");
+					//    Get the layers names and create them.
+					Layer.makeLayers(Consultant.db.getLayersNames());
+					System.out.println("Consultant read.");
+					continue;
+				}
 
-                //	Design to be routed
-                DesignCmp design = (DesignCmp) obj;
-                design = layout.placer.PlacerExpert.initDesign(design);
+				//	Design to be routed
+				DesignCmp design = (DesignCmp) obj;
+				design = layout.placer.PlacerExpert.initDesign(design);
 
-                //	Router the design
-                RouterExpert rp = new RouterExpert(design);
-                try {
-                    rp.run();
-                    if (rp.getDesign() == null)
-                        throw new RuntimeException("NO DESIGN");
-                    out.writeObject(rp.getDesign());
-                    System.out.println("OK Design.");
-                } catch (Exception erun) {
-                    out.writeObject(erun);
-                    System.out.println("No Design.");
-                }
-            }
-        } catch (Exception e2) {
-        }
-    }
+				//	Router the design
+				RouterExpert rp = new RouterExpert(design);
+				try {
+					rp.run();
+					if (rp.getDesign() == null)
+						throw new RuntimeException("NO DESIGN");
+					out.writeObject(rp.getDesign());
+					System.out.println("OK Design.");
+				} catch (Exception erun) {
+					out.writeObject(erun);
+					System.out.println("No Design.");
+				}
+			}
+		} catch (Exception e2) {
+		}
+	}
 }

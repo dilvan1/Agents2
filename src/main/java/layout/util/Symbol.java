@@ -38,36 +38,38 @@ import java.io.ObjectOutput;
 
 public class Symbol implements Externalizable {
 
-    private String str;
+	private String str;
 
-    public Symbol() {
-    }
+	public Symbol() {
+	}
 
-    public Symbol(String s) {
-        str = s.intern();
-    }
+	public Symbol(String s) {
+		str = s.intern();
+	}
 
-    public Symbol(Symbol s) {
-        str = s.str;
-    }
+	public Symbol(Symbol s) {
+		str = s.str;
+	}
 
-    public boolean equals(Object obj) {
-        try {
-            return str == ((Symbol) obj).str;
-        } catch (Exception e) {
-            return false;
-        }
-    }
+	@Override
+	public boolean equals(Object obj) {
+		try {
+			return str == ((Symbol) obj).str;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
-    public boolean equalsStr(String strg) {
-        return str.equals(strg);
-    }
+	public boolean equalsStr(String strg) {
+		return str.equals(strg);
+	}
 
-    public void readExternal(ObjectInput inp) throws IOException, ClassNotFoundException {
-        str = (String) inp.readObject();
-        str = str.intern();
-    }
-    /*
+	@Override
+	public void readExternal(ObjectInput inp) throws IOException, ClassNotFoundException {
+		str = (String) inp.readObject();
+		str = str.intern();
+	}
+	/*
     public boolean equals(Object obj) {
 		try { return str==((Symbol) obj).str; }
 		catch (Exception e) {
@@ -75,13 +77,15 @@ public class Symbol implements Externalizable {
 			catch (Exception e2) { return false;}
 		}
 	}
-	*/
+	 */
 
-    public String toString() {
-        return str;
-    }
+	@Override
+	public String toString() {
+		return str;
+	}
 
-    public void writeExternal(ObjectOutput out) throws IOException {
-        out.writeObject(str);
-    }
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeObject(str);
+	}
 }

@@ -37,32 +37,33 @@ import java.awt.event.ActionListener;
 
 class LayerDialog extends Dialog implements ActionListener {
 
-    Display1 dsp;
+	Display1 dsp;
 
-    public LayerDialog(Display1 d, java.awt.List showL, java.awt.List fillL) {
-        super(d, "Choose Layers");
-        dsp = d;
-        Panel p = new Panel();
-        p.add(new Label("Layers Showing"));
-        p.add(new Label("Filled Layers"));
-        add("North", p);
+	public LayerDialog(Display1 d, java.awt.List showL, java.awt.List fillL) {
+		super(d, "Choose Layers");
+		dsp = d;
+		Panel p = new Panel();
+		p.add(new Label("Layers Showing"));
+		p.add(new Label("Filled Layers"));
+		add("North", p);
 
-        p = new Panel();
-        p.add(showL);
-        p.add(fillL);
-        add("Center", p);
+		p = new Panel();
+		p.add(showL);
+		p.add(fillL);
+		add("Center", p);
 
-        Button b = new Button("OK");
-        b.addActionListener(this);
-        p = new Panel();
-        p.add(b);
-        add("South", p);
+		Button b = new Button("OK");
+		b.addActionListener(this);
+		p = new Panel();
+		p.add(b);
+		add("South", p);
 
-        pack();
-    }
+		pack();
+	}
 
-    public void actionPerformed(ActionEvent e) {
-        setVisible(false);
-        dsp.cp.repaint();
-    }
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		setVisible(false);
+		dsp.cp.repaint();
+	}
 }

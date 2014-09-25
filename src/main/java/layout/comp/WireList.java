@@ -31,25 +31,25 @@ package layout.comp;
  * WireList
  */
 
-public class WireList extends OwnedList {
+public class WireList extends OwnedList<Wire> {}
 
-    public void add(int pos, Object obj) {
-        super.add(pos, (Wire) obj);
-    }
+//public void add(int pos, Object obj) {
+//    super.add(pos, (Wire) obj);
+//}
 
-    public boolean add(Object obj) {
-        return super.add((Wire) obj);
-    }
-
-    public Wire at(int pos) {
-        return (Wire) get(pos);
-    }
-
-    public Wire pick(int pos) {
-        return (Wire) remove(pos);
-    }
-
-    public Object set(int pos, Object obj) {
-        return super.set(pos, (Wire) obj);
-    }
-}
+//    public boolean add(E obj) {
+//        return super.add((Wire) obj);
+//    }
+//
+//    public Wire at(int pos) {
+//        return (Wire) get(pos);
+//    }
+//
+//    public Wire pick(int pos) {
+//        return (Wire) remove(pos);
+//    }
+//
+//    public Object set(int pos, Object obj) {
+//        return super.set(pos, (Wire) obj);
+//    }
+//}

@@ -35,31 +35,31 @@ import layout.util.Rectangle;
 
 public class NoCrash {
 
-    Wire wire;
-    Rectangle rec;
-    Layer layer;
+	Wire wire;
+	Rectangle rec;
+	Layer layer;
 
-    public NoCrash(Wire wire, int ind) {
-        this.wire = wire;
-        this.rec = new Rectangle(wire.at(ind - 1), wire.at(ind), wire.at(ind).width());
-        this.layer = wire.at(ind).layer();
-    }
+	public NoCrash(Wire wire, int ind) {
+		this.wire = wire;
+		rec = new Rectangle(wire.get(ind - 1), wire.get(ind), wire.get(ind).width());
+		layer = wire.get(ind).layer();
+	}
 
-    public NoCrash(Wire wire, Rectangle rec, Layer layer) {
-        this.wire = wire;
-        this.rec = new Rectangle(rec);
-        this.layer = layer;
-    }
+	public NoCrash(Wire wire, Rectangle rec, Layer layer) {
+		this.wire = wire;
+		this.rec = new Rectangle(rec);
+		this.layer = layer;
+	}
 
-    public Layer getLayer() {
-        return layer;
-    }
+	public Layer getLayer() {
+		return layer;
+	}
 
-    public Rectangle getRectangle() {
-        return rec;
-    }
+	public Rectangle getRectangle() {
+		return rec;
+	}
 
-    public Wire getWire() {
-        return wire;
-    }
+	public Wire getWire() {
+		return wire;
+	}
 }

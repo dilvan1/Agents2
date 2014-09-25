@@ -35,48 +35,48 @@ import java.util.List;
 
 public class Crash {
 
-    Wire wire;
-    int ind;
-    int distance;
-    List rec;
+	Wire wire;
+	int ind;
+	int distance;
+	List rec;
 
-    public Crash(Wire w, int i) {
-        wire = w;
-        ind = i;
-        distance = -1;
-    }
+	public Crash(Wire w, int i) {
+		wire = w;
+		ind = i;
+		distance = -1;
+	}
 
-    public Crash(Wire w, int i, int d) {
-        wire = w;
-        ind = i;
-        distance = d;
-    }
+	public Crash(Wire w, int i, int d) {
+		wire = w;
+		ind = i;
+		distance = d;
+	}
 
-    public Crash(Wire w, int i, int d, List r) {
-        wire = w;
-        ind = i;
-        distance = d;
-        rec = r;
-    }
+	public Crash(Wire w, int i, int d, List r) {
+		wire = w;
+		ind = i;
+		distance = d;
+		rec = r;
+	}
 
-    public int getDistance() {
-        if (distance < 0) throw new RuntimeException("No distance, not a vector crash");
-        return distance;
-    }
+	public int getDistance() {
+		if (distance < 0) throw new RuntimeException("No distance, not a vector crash");
+		return distance;
+	}
 
-    public int getInd() {
-        return ind;
-    }
+	public int getInd() {
+		return ind;
+	}
 
-    public List getNet() {
-        return rec;
-    }
+	public List getNet() {
+		return rec;
+	}
 
-    public Wire getWire() {
-        return wire;
-    }
+	public Wire getWire() {
+		return wire;
+	}
 
-    public WirePt getWirePt() {
-        return wire.at(ind);
-    }
+	public WirePt getWirePt() {
+		return wire.get(ind);
+	}
 }

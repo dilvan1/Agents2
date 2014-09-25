@@ -32,109 +32,118 @@ package layout.comp;
  */
 
 import java.util.Collection;
-import java.util.Iterator;
+
 import layout.util.SVector;
 
-public class OwnedList extends SVector implements Owned, Cloneable {
+public class OwnedList<T extends Owned> extends SVector<T> implements Owned, Cloneable {
 
-    private Object owner;
+	private Object owner;
 
-    public void add(int pos, Object obj) {
-        super.add(pos, obj);
-        own(obj);
-    }
+	@Override
+	public void add(int pos, T obj) {
+		super.add(pos, obj);
+		own(obj);
+	}
 
-    public boolean add(Object obj) {
-        if (super.add(obj)) {
-            own(obj);
-            return true;
-        }
-        return false;
-    }
+	@Override
+	public boolean add(T obj) {
+		if (super.add(obj)) {
+			own(obj);
+			return true;
+		}
+		return false;
+	}
 
-    public boolean addAll(int ind, Collection c) {
-        if (super.addAll(ind, c)) {
-            for (Iterator i = c.iterator(); i.hasNext(); ) {
-                own(i.next());
-            }
-            return true;
-        }
-        if (c.isEmpty())
-            return false;
-        throw new RuntimeException("addAll failed.");
-    }
+	@Override
+	public boolean addAll(Collection<? extends T> c) {
+		if (super.addAll(c)) {
+			for (T name : c)
+				own(name);
+			return true;
+		}
+		if (c.isEmpty())
+			return false;
+		throw new RuntimeException("addAll failed.");
+	}
 
-    public boolean addAll(Collection c) {
-        if (super.addAll(c)) {
-            for (Iterator i = c.iterator(); i.hasNext(); ) {
-                own(i.next());
-            }
-            return true;
-        }
-        if (c.isEmpty())
-            return false;
-        throw new RuntimeException("addAll failed.");
-    }
+	@Override
+	public boolean addAll(int ind, Collection<? extends T> c) {
+		if (super.addAll(ind, c)) {
+			for (T name : c)
+				own(name);
+			return true;
+		}
+		if (c.isEmpty())
+			return false;
+		throw new RuntimeException("addAll failed.");
+	}
 
-    public void clear() {
-        for (int aux1 = 0; aux1 < size(); aux1++) {
-            ((Owned) get(aux1)).setOwner(null);
-        }
-        super.clear();
-    }
+	@Override
+	public void clear() {
+		for (int aux1 = 0; aux1 < size(); aux1++)
+			get(aux1).setOwner(null);
+		super.clear();
+	}
 
-    public Object clone() {
-        OwnedList lst = (OwnedList) super.clone();
-        for (int aux1 = 0; aux1 < size(); aux1++) {
-            Owned aux = (Owned) ((Owned) get(aux1)).clone();
-            lst.set(aux1, aux);
-            ((Owned) get(aux1)).setOwner(this);
-        }
-        lst.setOwner(null);
-        return lst;
-    }
+	@Override
+	public OwnedList<T> clone() {
+		OwnedList<T> lst = (OwnedList<T>) super.clone();
+		for (int aux1 = 0; aux1 < size(); aux1++) {
+			T aux = (T) get(aux1).clone();
+			lst.set(aux1, aux);
+			get(aux1).setOwner(this);
+		}
+		lst.setOwner(null);
+		return lst;
+	}
 
-    public Object getOwner() {
-        return owner;
-    }
+	@Override
+	public Object getOwner() {
+		return owner;
+	}
 
-    private void own(Object obj) {
-        if (((Owned) obj).getOwner() != null)
-            throw new RuntimeException("Trying to own an owned object.");
-        ((Owned) obj).setOwner(this);
-    }
+	private void own(Owned obj) {
+		if (obj.getOwner() != null)
+			throw new RuntimeException("Trying to own an owned object.");
+		obj.setOwner(this);
+	}
 
-    public Object remove(int pos) {
-        Owned obj = (Owned) super.remove(pos);
-        obj.setOwner(null);
-        return obj;
-    }
+	@Override
+	public T remove(int pos) {
+		T obj = super.remove(pos);
+		obj.setOwner(null);
+		return obj;
+	}
 
-    public boolean remove(Object obj) {
-        if (super.remove(obj)) {
-            if (obj != null)
-                ((Owned) obj).setOwner(null);
-            return true;
-        }
-        return false;
-    }
+	public boolean remove(T obj) {
+		if (super.remove(obj)) {
+			if (obj != null)
+				obj.setOwner(null);
+			return true;
+		}
+		return false;
+	}
 
-    public boolean removeAll(Collection c) {
-        throw new RuntimeException("Method not implemented.");
-    }
+	@Override
+	public boolean removeAll(Collection c) {
+		throw new RuntimeException("Method not implemented.");
+	}
 
-    public boolean retainAll(Collection c) {
-        throw new RuntimeException("Method not implemented.");
-    }
+	@Override
+	public boolean retainAll(Collection c) {
+		throw new RuntimeException("Method not implemented.");
+	}
 
-    public Object set(int pos, Object obj) {
-        Owned aux = (Owned) super.set(pos, obj);
-        aux.setOwner(null);
-        own(obj);
-        return aux;
-    }
+	@Override
+	public T set(int pos, T obj) {
+		T aux = super.set(pos, obj);
+		aux.setOwner(null);
+		own(obj);
+		return aux;
+	}
 
-    public void setOwner(Object obj) {
-        owner = obj;
-    }
+	@Override
+	public void setOwner(Object obj) {
+		owner = obj;
+	}
 }

@@ -31,28 +31,28 @@ package layout.placer;
  * This type was created in VisualAge.
  */
 class EvalReport {
-    private int numCrashes;
-    private int cost;
+	private final int numCrashes;
+	private final int cost;
 
-    EvalReport(int numCrashes, int cost) {
-        this.numCrashes = numCrashes;
-        this.cost = cost;
-    }
+	EvalReport(int numCrashes, int cost) {
+		this.numCrashes = numCrashes;
+		this.cost = cost;
+	}
 
-    int getCost() {
-        return cost;
-    }
+	int getCost() {
+		return cost;
+	}
 
-    int getNumCrashes() {
-        return numCrashes;
-    }
+	int getNumCrashes() {
+		return numCrashes;
+	}
 
-    /**
-     * This method was created in VisualAge.
-     */
-    boolean isBetterThan(EvalReport report) {
-        double total = (getNumCrashes() - report.getNumCrashes()) / (report.getNumCrashes() * 1.0);
-        total = total + (getCost() - report.getCost()) / (report.getCost() * 1.0);
-        return (total < 0);
-    }
+	/**
+	 * This method was created in VisualAge.
+	 */
+	boolean isBetterThan(EvalReport report) {
+		double total = (getNumCrashes() - report.getNumCrashes()) / (report.getNumCrashes() * 1.0);
+		total = total + (getCost() - report.getCost()) / (report.getCost() * 1.0);
+		return (total < 0);
+	}
 }

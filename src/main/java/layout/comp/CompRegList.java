@@ -33,29 +33,9 @@ package layout.comp;
 
 import java.util.Vector;
 
-public class CompRegList extends Vector {
+public class CompRegList extends Vector<CompReg> {
 
-    public void add(int pos, Object obj) {
-        super.add(pos, (CompReg) obj);
-    }
-
-    public boolean add(Object obj) {
-        return super.add((CompReg) obj);
-    }
-
-    public CompReg at(int pos) {
-        return (CompReg) get(pos);
-    }
-
-    public CompReg last() {
-        return (CompReg) get(size() - 1);
-    }
-
-    public CompReg pick(int pos) {
-        return (CompReg) remove(pos);
-    }
-
-    public Object set(int pos, Object obj) {
-        return super.set(pos, (CompReg) obj);
-    }
+	public CompReg last() {
+		return get(size() - 1);
+	}
 }

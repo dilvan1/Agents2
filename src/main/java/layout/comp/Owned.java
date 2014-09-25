@@ -27,15 +27,14 @@
 
 package layout.comp;
 
-/*
+/**
  *  Owned
  */
-
 interface Owned {
 
-    public Object clone();
+	public Object clone();
 
-    public Object getOwner();
+	public Object getOwner();
 
-    public void setOwner(Object obj);
+	public void setOwner(Object obj);
 }

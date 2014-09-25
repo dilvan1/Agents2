@@ -33,40 +33,42 @@ package layout.util;
 
 public class Linea extends Linea1 {
 
-    public Linea() {
-    }
+	public Linea() {
+	}
 
-    public Linea(int x1, int y1, int x2, int y2) {
-        super(x1, y1, x2, y2);
-    }
+	public Linea(int x1, int y1, int x2, int y2) {
+		super(x1, y1, x2, y2);
+	}
 
-    public Linea(Pt p1, Pt p2) {
-        super(p1, p2);
-    }
+	public Linea(Pt p1, Pt p2) {
+		super(p1, p2);
+	}
 
-    public boolean equals(Object obj) {
-        try {
-            Linea lin = (Linea) obj;
-            return (c1.equals(lin.c1) && c2.equals(lin.c2));
-        } catch (Exception e) {
-            return false;
-        }
-    }
+	@Override
+	public boolean equals(Object obj) {
+		try {
+			Linea lin = (Linea) obj;
+			return (c1.equals(lin.c1) && c2.equals(lin.c2));
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
-    public InterPt getIntersectPt(Linea line) {
-        return intersectPt(line);
-    }
+	public InterPt getIntersectPt(Linea line) {
+		return intersectPt(line);
+	}
 
-    public boolean isCoincident(Linea line) {
-        return coincident(line);
-    }
+	public boolean isCoincident(Linea line) {
+		return coincident(line);
+	}
 
-    public void set(Linea lin) {
-        c1.set(lin.c1);
-        c2.set(lin.c2);
-    }
+	public void set(Linea lin) {
+		c1.set(lin.c1);
+		c2.set(lin.c2);
+	}
 
-    public String toString() {
-        return "Linea = " + c1 + "," + c2 + " ";
-    }
+	@Override
+	public String toString() {
+		return "Linea = " + c1 + "," + c2 + " ";
+	}
 }

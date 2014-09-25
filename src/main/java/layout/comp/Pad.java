@@ -35,37 +35,37 @@ import java.io.IOException;
 import java.io.Writer;
 
 public class Pad extends Component {
-    public Pad(int refI, int num, int comp) {
-        super(refI, num);
-    }
+	public Pad(int refI, int num, int comp) {
+		super(refI, num);
+	}
 
-    public void printEdif(Writer out) throws IOException {
+	@Override
+	public void printEdif(Writer out) throws IOException {
 
-        out.write("      (cell " + name + "\n" +
-                "         (userData cellFunction pad)" + "\n" +
-                "         (view maskLayout Physical" + "\n" +
-                "            (interface" + "\n" +
-                "               (declare inout port pad)" + "\n" +
-                "               (portImplementation pad" + "\n");
+		out.write("      (cell " + name + "\n" +
+				"         (userData cellFunction pad)" + "\n" +
+				"         (view maskLayout Physical" + "\n" +
+				"            (interface" + "\n" +
+				"               (declare inout port pad)" + "\n" +
+				"               (portImplementation pad" + "\n");
 
-        for (int aux1 = 0; aux1 < getTerms().at(0).getBody().size(); aux1++) {
-            getTerms().at(0).getBody().at(aux1).printEdif(out);
-        }
+		for (Wire wire: getTerms().get(0).getBody())
+			wire.printEdif(out);
 
-        out.write("               )" + "\n" +
-                "            )" + "\n" +
-                "            (contents" + "\n");
+		out.write("               )" + "\n" +
+				"            )" + "\n" +
+				"            (contents" + "\n");
 
-        for (int aux1 = 0; aux1 < getBody().size(); aux1++) {
-            getBody().at(aux1).printEdif(out);
-        }
+		for (Wire wire: getBody())
+			wire.printEdif(out);
 
-        out.write("            )" + "\n" +
-                "         )" + "\n" +
-                "      )" + "\n");
-    }
+		out.write("            )" + "\n" +
+				"         )" + "\n" +
+				"      )" + "\n");
+	}
 
-    public String toString() {
-        return "Pad \n" + super.toString();
-    }
+	@Override
+	public String toString() {
+		return "Pad \n" + super.toString();
+	}
 }

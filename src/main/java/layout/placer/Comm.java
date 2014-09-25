@@ -43,92 +43,93 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class Comm implements Runnable {
-    ObjectOutputStream out;
-    ObjectInputStream in;
-    volatile boolean freeFlag;
-    DesignCmp design;
+	ObjectOutputStream out;
+	ObjectInputStream in;
+	volatile boolean freeFlag;
+	DesignCmp design;
 
-    /**
-     * Comm constructor comment.
-     */
-    Comm(String address, int port) throws IOException {
-        design = null;
-        freeFlag = true;
-        out = null;
-        in = null;
+	/**
+	 * Comm constructor comment.
+	 */
+	Comm(String address, int port) throws IOException {
+		design = null;
+		freeFlag = true;
+		out = null;
+		in = null;
 
-        if (address != null) {
-            //
-            Socket soc = new Socket(address, port);
-            out = new ObjectOutputStream(soc.getOutputStream());
-            in = new ObjectInputStream(soc.getInputStream());
+		if (address != null) {
+			//
+			Socket soc = new Socket(address, port);
+			out = new ObjectOutputStream(soc.getOutputStream());
+			in = new ObjectInputStream(soc.getInputStream());
 
-            //	Send design rules
-            out.writeObject(Consultant.db);
-            try {
-                if (!((String) in.readObject()).equals("OK"))
-                    throw new IOException("");
-            } catch (Exception e) {
-                throw new IOException("Failure transmiting rules.");
-            }
-        }
-    }
+			//	Send design rules
+			out.writeObject(Consultant.db);
+			try {
+				if (!((String) in.readObject()).equals("OK"))
+					throw new IOException("");
+			} catch (Exception e) {
+				throw new IOException("Failure transmiting rules.");
+			}
+		}
+	}
 
-    /**
-     * Insert the method's description here.
-     * Creation date: (10/12/2000 11:51:54 PM)
-     */
-    DesignCmp getDesign() {
-        return design;
-    }
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (10/12/2000 11:51:54 PM)
+	 */
+	DesignCmp getDesign() {
+		return design;
+	}
 
-    /**
-     * Insert the method's description here.
-     * Creation date: (10/12/2000 11:36:33 PM)
-     */
-    boolean isFree() {
-        return freeFlag;
-    }
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (10/12/2000 11:36:33 PM)
+	 */
+	boolean isFree() {
+		return freeFlag;
+	}
 
-    /**
-     * Insert the method's description here.
-     * Creation date: (10/12/2000 11:37:03 PM)
-     */
-    public void run() {
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (10/12/2000 11:37:03 PM)
+	 */
+	@Override
+	public void run() {
 
-        //	If no router servers
-        if (out == null) {
-            RouterExpert re = new RouterExpert(design);
-            re.run();
-            design = re.getDesign();
-            freeFlag = true;
-            return;
-        }
+		//	If no router servers
+		if (out == null) {
+			RouterExpert re = new RouterExpert(design);
+			re.run();
+			design = re.getDesign();
+			freeFlag = true;
+			return;
+		}
 
-        //If server OK
-        try {
-            out.writeObject(design);
-            Object obj = in.readObject();
-            if (obj instanceof DesignCmp) {
-                design = (DesignCmp) obj;
-                System.out.println("Design OK");
-            } else {
-                design = null;
-                System.out.println("Design Fail:" + obj);
-            }
-        } catch (Exception e) {
-            design = null;
-            System.out.println("Communication Exception:\n" + e);
-        }
-        freeFlag = true;
-    }
+		//If server OK
+		try {
+			out.writeObject(design);
+			Object obj = in.readObject();
+			if (obj instanceof DesignCmp) {
+				design = (DesignCmp) obj;
+				System.out.println("Design OK");
+			} else {
+				design = null;
+				System.out.println("Design Fail:" + obj);
+			}
+		} catch (Exception e) {
+			design = null;
+			System.out.println("Communication Exception:\n" + e);
+		}
+		freeFlag = true;
+	}
 
-    /**
-     * Insert the method's description here.
-     * Creation date: (10/12/2000 11:27:13 PM)
-     */
-    void setDesign(DesignCmp des) {
-        freeFlag = false;
-        design = des;
-    }
+	/**
+	 * Insert the method's description here.
+	 * Creation date: (10/12/2000 11:27:13 PM)
+	 */
+	void setDesign(DesignCmp des) {
+		freeFlag = false;
+		design = des;
+	}
 }

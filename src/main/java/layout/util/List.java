@@ -35,13 +35,13 @@ package layout.util;
  * Interface List
  */
 
-public interface List extends java.util.List {
+public interface List<E> extends java.util.List<E> {
 
-    public void invert();
+	public void invert();
 
-    public boolean isSlot(Object obj);
+	public boolean isSlot(Object obj);
 
-    public List lst(int ind);
+	public List lst(int ind);
 
-    public List slot(Object obj);
+	public List slot(Object obj);
 }

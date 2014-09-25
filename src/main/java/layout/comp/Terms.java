@@ -33,41 +33,29 @@ package layout.comp;
 
 import layout.util.Symbol;
 
-public class Terms extends OwnedList {
+public class Terms extends OwnedList<Term> {
 
-    /**
-     * Insert the method's description here.
-     * Creation date: (9/15/2000 11:05:36 PM)
-     */
-    public void add(int ind, Object obj) {
-        super.add(ind, (Term) obj);
-    }
+	@Override
+	public Terms clone() { return (Terms) super.clone();}
 
-    public boolean add(Object obj) {
-        return super.add((Term) obj);
-    }
+	public Term get(Symbol ind) {
+		//        int aux1;
+		//        for (aux1 = 0; aux1 < size() && !ind.equals(get(aux1).name); aux1++) ;
+		//        return get(aux1);
 
-    public Term at(int pos) {
-        return (Term) get(pos);
-    }
+		for (Term term: this)
+			if (ind.equals(term.name))
+				return term;
+		return null;
+	}
 
-    public Term at(Symbol ind) {
-        int aux1;
-        for (aux1 = 0; aux1 < size() && !ind.equals(at(aux1).name); aux1++) ;
-        return at(aux1);
-    }
-
-    boolean isEqualBodies(Terms terms2) {
-        int aux1;
-        for (aux1 = 0; aux1 < size() &&
-                aux1 < terms2.size() &&
-                at(aux1).getBody().equals(terms2.at(aux1).getBody());
-             aux1++)
-            ;
-        return (aux1 >= size() && aux1 >= terms2.size());
-    }
-
-    public Object set(int pos, Object obj) {
-        return super.set(pos, (Term) obj);
-    }
+	boolean isEqualBodies(Terms terms2) {
+		int aux1;
+		for (aux1 = 0; aux1 < size() &&
+				aux1 < terms2.size() &&
+				get(aux1).getBody().equals(terms2.get(aux1).getBody());
+				aux1++)
+			;
+		return (aux1 >= size() && aux1 >= terms2.size());
+	}
 }

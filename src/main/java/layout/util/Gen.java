@@ -37,52 +37,52 @@ import java.io.ObjectOutputStream;
  */
 public class Gen {
 
-    /*
-     *                very DANGEROUS function
-     */
-    static public Object deepCopy(Object obj) throws Exception {
-        ByteArrayOutputStream buf = new ByteArrayOutputStream();
-        ObjectOutputStream out = new ObjectOutputStream(buf);
-        out.writeObject(obj);
-        ObjectInputStream inp = new ObjectInputStream(new ByteArrayInputStream(buf.toByteArray()));
-        return inp.readObject();
-    }
+	/*
+	 *                very DANGEROUS function
+	 */
+	static public Object deepCopy(Object obj) throws Exception {
+		ByteArrayOutputStream buf = new ByteArrayOutputStream();
+		ObjectOutputStream out = new ObjectOutputStream(buf);
+		out.writeObject(obj);
+		ObjectInputStream inp = new ObjectInputStream(new ByteArrayInputStream(buf.toByteArray()));
+		return inp.readObject();
+	}
 
-    static public List newList() {
-        return new SVector();
-    }
+	static public List newList() {
+		return new SVector();
+	}
 
-    static public List newList(int size) {
-        return new SVector(size);
-    }
+	static public List newList(int size) {
+		return new SVector(size);
+	}
 
-    static public List newList(Object obj) {
-        List lst = new SVector(1);
-        lst.add(obj);
-        return lst;
-    }
+	static public List newList(Object obj) {
+		List lst = new SVector(1);
+		lst.add(obj);
+		return lst;
+	}
 
-    static public List newList(Object obj1, Object obj2) {
-        List lst = new SVector(1);
-        lst.add(obj1);
-        lst.add(obj2);
-        return lst;
-    }
+	static public List newList(Object obj1, Object obj2) {
+		List lst = new SVector(1);
+		lst.add(obj1);
+		lst.add(obj2);
+		return lst;
+	}
 
-    static public List newList(Object obj1, Object obj2, Object obj3) {
-        List lst = new SVector(1);
-        lst.add(obj1);
-        lst.add(obj2);
-        lst.add(obj3);
-        return lst;
-    }
+	static public List newList(Object obj1, Object obj2, Object obj3) {
+		List lst = new SVector(1);
+		lst.add(obj1);
+		lst.add(obj2);
+		lst.add(obj3);
+		return lst;
+	}
 
-    static public List newList(Object obj1, Object obj2, Object obj3, Object obj4) {
-        List lst = new SVector(1);
-        lst.add(obj1);
-        lst.add(obj2);
-        lst.add(obj3);
-        lst.add(obj4);
-        return lst;
-    }
+	static public List newList(Object obj1, Object obj2, Object obj3, Object obj4) {
+		List lst = new SVector(1);
+		lst.add(obj1);
+		lst.add(obj2);
+		lst.add(obj3);
+		lst.add(obj4);
+		return lst;
+	}
 }

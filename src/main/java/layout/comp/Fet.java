@@ -38,91 +38,94 @@ import java.io.Writer;
 
 public class Fet extends Component {
 
-    public static Symbol SOURCE = new Symbol("SOURCE");
-    public static Symbol GATE = new Symbol("GATE");
-    public static Symbol DRAIN = new Symbol("DRAIN");
+	public static Symbol SOURCE = new Symbol("SOURCE");
+	public static Symbol GATE = new Symbol("GATE");
+	public static Symbol DRAIN = new Symbol("DRAIN");
 
-    public static Symbol NMOS = new Symbol("NMOS");
-    public static Symbol PMOS = new Symbol("PMOS");
+	public static Symbol NMOS = new Symbol("NMOS");
+	public static Symbol PMOS = new Symbol("PMOS");
 
-    public Symbol tecn;
-    boolean swapFlag = false;
+	public Symbol tecn;
+	boolean swapFlag = false;
 
-    public Fet(int refI, int numI, Symbol tecI) {
-        super(refI, numI);
-        tecn = tecI;
-    }
+	public Fet(int refI, int numI, Symbol tecI) {
+		super(refI, numI);
+		tecn = tecI;
+	}
 
-    public void drawOut(layout.display.Display out) {
-        super.drawOut(out);
-        layout.util.Rectangle env = getEnvelope();
-        out.addLabel(String.valueOf(reference), env.c1);
+	@Override
+	public void drawOut(layout.display.Display out) {
+		super.drawOut(out);
+		layout.util.Rectangle env = getEnvelope();
+		out.addLabel(String.valueOf(reference), env.c1);
 
-        env.c1 = (layout.util.Pt) getTerms().at(DRAIN).getBody().at(0).at(0);
-        out.addLabel("D", env.c1);
-        env.c1 = (layout.util.Pt) getTerms().at(SOURCE).getBody().at(0).at(0);
-        out.addLabel("S", env.c1);
-    }
+		env.c1 = getTerms().get(DRAIN).getBody().get(0).get(0);
+		out.addLabel("D", env.c1);
+		env.c1 = getTerms().get(SOURCE).getBody().get(0).get(0);
+		out.addLabel("S", env.c1);
+	}
 
-    public boolean equals(Object obj) {
-        try {
-            return (super.equals(obj) && tecn.equals(((Fet) obj).tecn));
-        } catch (Exception e) {
-            return false;
-        }
-    }
+	@Override
+	public boolean equals(Object obj) {
+		try {
+			return (super.equals(obj) && tecn.equals(((Fet) obj).tecn));
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
-    public boolean isGateConnected(Fet fet) {
-        return (getTerms().at(GATE).electricNode == fet.getTerms().at(GATE).electricNode);
-    }
+	public boolean isGateConnected(Fet fet) {
+		return (getTerms().get(GATE).electricNode == fet.getTerms().get(GATE).electricNode);
+	}
 
-    public boolean isPassPair(Fet fet) {
-        return (
-                (getTerms().at(SOURCE).electricNode == fet.getTerms().at(SOURCE).electricNode &&
-                        getTerms().at(DRAIN).electricNode == fet.getTerms().at(DRAIN).electricNode) ||
-                        (getTerms().at(SOURCE).electricNode == fet.getTerms().at(DRAIN).electricNode &&
-                                getTerms().at(DRAIN).electricNode == fet.getTerms().at(SOURCE).electricNode));
-    }
+	public boolean isPassPair(Fet fet) {
+		return (
+				(getTerms().get(SOURCE).electricNode == fet.getTerms().get(SOURCE).electricNode &&
+				getTerms().get(DRAIN).electricNode == fet.getTerms().get(DRAIN).electricNode) ||
+				(getTerms().get(SOURCE).electricNode == fet.getTerms().get(DRAIN).electricNode &&
+				getTerms().get(DRAIN).electricNode == fet.getTerms().get(SOURCE).electricNode));
+	}
 
-    public boolean isSameFetTecn(Fet fet) {
-        return (tecn.equals(fet.tecn));
-    }
+	public boolean isSameFetTecn(Fet fet) {
+		return (tecn.equals(fet.tecn));
+	}
 
-    public void printEdif(Writer out) throws IOException {
-        out.write("      (cell " + name + "\n" +
-                "         (userData cellFunction " + tecn + ")" + "\n" +
-                "         (view maskLayout Physical" + "\n" +
-                "            (interface" + "\n" +
-                "               (declare input port gate)" + "\n" +
-                "               (declare inout port (list source drain))" + "\n" +
-                "               (permutable source drain)" + "\n" +
-                "               (portImplementation gate" + "\n");
-        for (int aux1 = 0; aux1 < getTerms().at(Fet.GATE).getBody().size(); aux1++) {
-            getTerms().at(Fet.GATE).getBody().at(aux1).printEdif(out);
-        }
-        out.write("               )" + "\n" +
-                "               (portImplementation drain" + "\n");
-        for (int aux1 = 0; aux1 < getTerms().at(Fet.DRAIN).getBody().size(); aux1++) {
-            getTerms().at(Fet.DRAIN).getBody().at(aux1).printEdif(out);
-        }
-        out.write("               )" + "\n" +
-                "               (portImplementation source" + "\n");
-        for (int aux1 = 0; aux1 < getTerms().at(Fet.SOURCE).getBody().size(); aux1++) {
-            getTerms().at(Fet.SOURCE).getBody().at(aux1).printEdif(out);
-        }
-        out.write("               )" + "\n" +
-                "            )" + "\n" +
-                "            (contents" + "\n");
-        for (int aux1 = 0; aux1 < getBody().size(); aux1++) {
-            getBody().at(aux1).printEdif(out);
-        }
-        out.write("            )" + "\n" +
-                "         )" + "\n" +
-                "      )" + "\n");
-    }
+	@Override
+	public void printEdif(Writer out) throws IOException {
+		out.write("      (cell " + name + "\n" +
+				"         (userData cellFunction " + tecn + ")" + "\n" +
+				"         (view maskLayout Physical" + "\n" +
+				"            (interface" + "\n" +
+				"               (declare input port gate)" + "\n" +
+				"               (declare inout port (list source drain))" + "\n" +
+				"               (permutable source drain)" + "\n" +
+				"               (portImplementation gate" + "\n");
+		for (Wire wire: getTerms().get(Fet.GATE).getBody())
+			wire.printEdif(out);
 
-    public void swapDS() {
-        /*        In the future change for non permutable Fets
+		out.write("               )" + "\n" +
+				"               (portImplementation drain" + "\n");
+		for (Wire wire: getTerms().get(Fet.DRAIN).getBody())
+			wire.printEdif(out);
+
+		out.write("               )" + "\n" +
+				"               (portImplementation source" + "\n");
+		for (Wire wire: getTerms().get(Fet.SOURCE).getBody())
+			wire.printEdif(out);
+
+		out.write("               )" + "\n" +
+				"            )" + "\n" +
+				"            (contents" + "\n");
+		for (Wire wire: getBody())
+			wire.printEdif(out);
+
+		out.write("            )" + "\n" +
+				"         )" + "\n" +
+				"      )" + "\n");
+	}
+
+	public void swapDS() {
+		/*        In the future change for non permutable Fets
 		 *                 W R O N G
 		 *
 		 *                THE PROGRAM CONSIDER ALWAYS THE DRAIN IN THE LEFT SIDE
@@ -130,18 +133,19 @@ public class Fet extends Component {
 		 */
 		/*
 		 Int aux1;
-	  
+
 		 aux1= terms()[SOURCE].electricNode();
 		 terms()[SOURCE].electricNode()= terms()[DRAIN].electricNode();
 		 terms()[DRAIN].electricNode()= aux1;
-		*/
-        Term drain = getTerms().at(DRAIN);
-        getTerms().at(SOURCE).name = DRAIN;
-        drain.name = SOURCE;
-        swapFlag = !swapFlag;
-    }
+		 */
+		Term drain = getTerms().get(DRAIN);
+		getTerms().get(SOURCE).name = DRAIN;
+		drain.name = SOURCE;
+		swapFlag = !swapFlag;
+	}
 
-    public String toString() {
-        return "Fet Tecn- " + tecn + "\n" + super.toString();
-    }
+	@Override
+	public String toString() {
+		return "Fet Tecn- " + tecn + "\n" + super.toString();
+	}
 }

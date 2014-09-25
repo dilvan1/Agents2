@@ -39,97 +39,98 @@ import java.io.InputStream;
 
 class LayerEdif extends LangEdif {
 
-    Consultant c;
+	Consultant c;
 
-    public LayerEdif(InputStream in, Consultant c1) {
-        super(in);
-        c = c1;
-    }
-    /*
+	public LayerEdif(InputStream in, Consultant c1) {
+		super(in);
+		c = c1;
+	}
+
+	/**
 	 *    Commands to read the Rules file
 	 */
+	@Override
+	protected Object command(String name, List list) throws LangException {
+		if (name.equals("GRIDVALUE")) return edif_gridValue(list);
+		else if (name.equals("LAYERSNAMES")) return edif_layersNames(list);
+		else if (name.equals("MINWIDTH")) return edif_minWidth(list);
+		else if (name.equals("MINSPACING")) return edif_minSpacing(list);
+		else if (name.equals("MINOVERLAPING")) return edif_minOverlaping(list);
+		else if (name.equals("RULESDB")) return edif_rulesDB(list);
+		return super.command(name, list);
+	}
 
-    protected Object command(String name, List list) throws LangException {
-        if (name.equals("GRIDVALUE")) return edif_gridValue(list);
-        else if (name.equals("LAYERSNAMES")) return edif_layersNames(list);
-        else if (name.equals("MINWIDTH")) return edif_minWidth(list);
-        else if (name.equals("MINSPACING")) return edif_minSpacing(list);
-        else if (name.equals("MINOVERLAPING")) return edif_minOverlaping(list);
-        else if (name.equals("RULESDB")) return edif_rulesDB(list);
-        return super.command(name, list);
-    }
+	/* Input:   (GRIDVALUE :Real)
+	 * Output:  :Null
+	 */
+	Object edif_gridValue(List list) throws LangException {
+		try {
+			c.gridValue = ((Double) list.get(0)).doubleValue();
+			c.convDist = 1 / c.gridValue;
+			return null;
+		} catch (RuntimeException re) {
+			throw new LangException("edif GRIDVALUE: Should have a float");
+		}
+	}
 
-    /* Input:   (GRIDVALUE :Real)
-     * Output:  :Null
-     */
-    Object edif_gridValue(List list) throws LangException {
-        try {
-            c.gridValue = ((Double) list.get(0)).doubleValue();
-            c.convDist = 1 / c.gridValue;
-            return null;
-        } catch (RuntimeException re) {
-            throw new LangException("edif GRIDVALUE: Should have a float");
-        }
-    }
+	/* Input:   (LAYERSNAMES :List)
+	 * Output:  :Null
+	 */
+	Object edif_layersNames(List list) throws LangException {
+		try {
+			c.layersNames = ((List) list.get(0));
+			return null;
+		} catch (RuntimeException re) {
+			throw new LangException("edif LAYERSNAMES: Should have a list of layers");
+		}
+	}
 
-    /* Input:   (LAYERSNAMES :List)
-     * Output:  :Null
-     */
-    Object edif_layersNames(List list) throws LangException {
-        try {
-            c.layersNames = ((List) list.get(0));
-            return null;
-        } catch (RuntimeException re) {
-            throw new LangException("edif LAYERSNAMES: Should have a list of layers");
-        }
-    }
+	/* Input:   (MINOVERLAPING :String :String :Real)
+	 * Output:  :Null
+	 */
+	Object edif_minOverlaping(List list) throws LangException {
+		try {
+			int res = (int) Math.ceil(((Double) list.get(2)).doubleValue() * c.convDist);
+			if (res < 0) res = -1;
+			c.minOverlapingTable.put((String) list.get(0) + (String) list.get(1), new Integer(res));
+			return null;
+		} catch (RuntimeException re) {
+			throw new LangException("edif MINOVERLAPING: Should have 2 layer and a float");
+		}
+	}
 
-    /* Input:   (MINOVERLAPING :String :String :Real)
-     * Output:  :Null
-     */
-    Object edif_minOverlaping(List list) throws LangException {
-        try {
-            int res = (int) Math.ceil(((Double) list.get(2)).doubleValue() * c.convDist);
-            if (res < 0) res = -1;
-            c.minOverlapingTable.put((String) list.get(0) + (String) list.get(1), new Integer(res));
-            return null;
-        } catch (RuntimeException re) {
-            throw new LangException("edif MINOVERLAPING: Should have 2 layer and a float");
-        }
-    }
+	/* Input:   (MINSPACING :String :String :Real)
+	 * Output:  :Null
+	 */
+	Object edif_minSpacing(List list) throws LangException {
+		try {
+			int res = (int) Math.ceil(((Double) list.get(2)).doubleValue() * c.convDist);
+			if (res < 0) res = -1;
+			c.minSpacingTable.put((String) list.get(0) + (String) list.get(1), new Integer(res));
+			return null;
+		} catch (RuntimeException re) {
+			throw new LangException("edif MINSPACING: Should have 2 layer and a float");
+		}
+	}
 
-    /* Input:   (MINSPACING :String :String :Real)
-     * Output:  :Null
-     */
-    Object edif_minSpacing(List list) throws LangException {
-        try {
-            int res = (int) Math.ceil(((Double) list.get(2)).doubleValue() * c.convDist);
-            if (res < 0) res = -1;
-            c.minSpacingTable.put((String) list.get(0) + (String) list.get(1), new Integer(res));
-            return null;
-        } catch (RuntimeException re) {
-            throw new LangException("edif MINSPACING: Should have 2 layer and a float");
-        }
-    }
+	/* Input:   (MINWIDTH :String :Real)
+	 * Output:  :Null
+	 */
+	Object edif_minWidth(List list) throws LangException {
+		try {
+			int res = (int) Math.ceil(((Double) list.get(1)).doubleValue() * c.convDist);
+			if (res < 0) res = -1;
+			c.minWidthTable.put(list.get(0), new Integer(res));
+			return null;
+		} catch (RuntimeException re) {
+			throw new LangException("edif MINWIDTH: Should have 1 layer and a float");
+		}
+	}
 
-    /* Input:   (MINWIDTH :String :Real)
-     * Output:  :Null
-     */
-    Object edif_minWidth(List list) throws LangException {
-        try {
-            int res = (int) Math.ceil(((Double) list.get(1)).doubleValue() * c.convDist);
-            if (res < 0) res = -1;
-            c.minWidthTable.put((String) list.get(0), new Integer(res));
-            return null;
-        } catch (RuntimeException re) {
-            throw new LangException("edif MINWIDTH: Should have 1 layer and a float");
-        }
-    }
-
-    /* Input:   (RULESDB)
-     * Output:  :Null
-     */
-    Object edif_rulesDB(List list) throws LangException {
-        return null;
-    }
+	/* Input:   (RULESDB)
+	 * Output:  :Null
+	 */
+	Object edif_rulesDB(List list) throws LangException {
+		return null;
+	}
 }

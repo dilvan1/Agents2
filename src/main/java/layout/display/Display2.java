@@ -39,30 +39,39 @@ import java.awt.*;
 
 class Display2 implements Display {
 
-    public void addLabel(String label, Pt pt) {
-    }
+	@Override
+	public void addLabel(String label, Pt pt) {
+	}
 
-    public void addLine(Linea lin, Color c) {
-    }
+	@Override
+	public void addLine(Linea lin, Color c) {
+	}
 
-    public void addRect(Rectangle rec, Color c) {
-    }
+	@Override
+	public void addRect(Rectangle rec, Color c) {
+	}
 
-    public void addRect(Rectangle rec, String l) {
-    }
+	@Override
+	public void addRect(Rectangle rec, String l) {
+	}
 
-    public void addVector(Linea vect, Color c) {
-    }
+	@Override
+	public void addVector(Linea vect, Color c) {
+	}
 
-    public void addWire(layout.comp.Wire w) {
-    }
+	@Override
+	public void addWire(layout.comp.Wire w) {
+	}
 
-    public void clear() {
-    }
+	@Override
+	public void clear() {
+	}
 
-    public void clearExtras() {
-    }
+	@Override
+	public void clearExtras() {
+	}
 
-    public void refresh() {
-    }
+	@Override
+	public void refresh() {
+	}
 }

@@ -35,74 +35,79 @@ import layout.util.Pt;
 
 public class WirePt extends Pt implements Owned, Cloneable {
 
-    Layer layer;
-    int width;
-    private Object owner;
+	Layer layer;
+	int width;
+	private Object owner;
 
-    public WirePt(int x, int y, int w, Layer lay) {
-        super(x, y);
-        width = w;
-        layer = lay;
-    }
+	public WirePt(int x, int y, int w, Layer lay) {
+		super(x, y);
+		width = w;
+		layer = lay;
+	}
 
-    public WirePt(Pt p1, int w, Layer lay) {
-        super(p1);
-        width = w;
-        layer = lay;
-    }
+	public WirePt(Pt p1, int w, Layer lay) {
+		super(p1);
+		width = w;
+		layer = lay;
+	}
 
-    public Object clone() {
-        try {
-            Owned obj = (Owned) super.clone();
-            obj.setOwner(null);
-            return obj;
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException("Clone not supported  exception");
-        }
-    }
+	@Override
+	public WirePt clone() {
+		try {
+			WirePt obj = (WirePt) super.clone();
+			obj.setOwner(null);
+			return obj;
+		} catch (CloneNotSupportedException e) {
+			throw new RuntimeException("Clone not supported  exception");
+		}
+	}
 
-    public boolean equals(Object obj) {
-        try {
-            WirePt wp = (WirePt) obj;
-            return (super.equals(wp) && width == wp.width && layer().equals(wp.layer()));
-        } catch (Exception e) {
-            return false;
-        }
-    }
+	@Override
+	public boolean equals(Object obj) {
+		try {
+			WirePt wp = (WirePt) obj;
+			return (super.equals(wp) && width == wp.width && layer().equals(wp.layer()));
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
-    public Object getOwner() {
-        return owner;
-    }
-    //        Method not used
-    /*
+	@Override
+	public Object getOwner() {
+		return owner;
+	}
+	//        Method not used
+	/*
 	public void set(WirePt wir) {
 		super.set(wir);
 		width= wir.width;
 		layer= wir.layer();
 	}
-	*/
+	 */
 
-    public boolean isJoinable(WirePt pt) {
-        return (x == pt.x && y == pt.y);
-    }
+	public boolean isJoinable(WirePt pt) {
+		return (x == pt.x && y == pt.y);
+	}
 
-    public Layer layer() {
-        return layer;
-    }
+	public Layer layer() {
+		return layer;
+	}
 
-    public void setOwner(Object obj) {
-        owner = obj;
-    }
+	@Override
+	public void setOwner(Object obj) {
+		owner = obj;
+	}
 
-    public void setWidth(int wid) {
-        width = wid;
-    }
+	public void setWidth(int wid) {
+		width = wid;
+	}
 
-    public String toString() {
-        return "(" + super.toString() + " " + width + " " + layer() + ")";
-    }
+	@Override
+	public String toString() {
+		return "(" + super.toString() + " " + width + " " + layer() + ")";
+	}
 
-    public int width() {
-        return width;
-    }
+	public int width() {
+		return width;
+	}
 }

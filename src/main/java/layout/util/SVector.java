@@ -38,47 +38,49 @@ import java.util.Vector;
  * Class SVector
  */
 
-public class SVector extends Vector implements List, Cloneable {
+public class SVector<E> extends Vector<E> implements List<E>, Cloneable {
 
-    public SVector() {
-    }
+	public SVector() {
+	}
 
-    public SVector(int size) {
-        super(size);
-    }
+	public SVector(int size) {
+		super(size);
+	}
 
-    public synchronized void invert() {
-        int size = size();
-        for (int aux1 = 0; aux1 < size / 2; aux1++) {
-            Object obj = get(aux1);
-            super.set(aux1, super.get(size - aux1 - 1));
-            super.set(size - aux1 - 1, obj);
-        }
-    }
+	@Override
+	public synchronized void invert() {
+		int size = size();
+		for (int aux1 = 0; aux1 < size / 2; aux1++) {
+			E obj = get(aux1);
+			super.set(aux1, super.get(size - aux1 - 1));
+			super.set(size - aux1 - 1, obj);
+		}
+	}
 
-    public boolean isSlot(Object obj) {
-        for (int aux1 = 0; aux1 < size(); aux1++) {
-            try {
-                if (lst(aux1).get(0).equals(obj))
-                    return true;
-            } catch (Exception e) {
-            }
-        }
-        return false;
-    }
+	@Override
+	public boolean isSlot(Object obj) {
+		for (int aux1 = 0; aux1 < size(); aux1++)
+			try {
+				if (lst(aux1).get(0).equals(obj))
+					return true;
+			} catch (Exception e) {
+			}
+		return false;
+	}
 
-    public List lst(int ind) {
-        return (List) get(ind);
-    }
+	@Override
+	public List lst(int ind) {
+		return (List) get(ind);
+	}
 
-    public List slot(Object obj) {
-        for (int aux1 = 0; aux1 < size(); aux1++) {
-            try {
-                if (lst(aux1).get(0).equals(obj))
-                    return lst(aux1);
-            } catch (Exception e) {
-            }
-        }
-        throw new RuntimeException("SList: No slot found");
-    }
+	@Override
+	public List slot(Object obj) {
+		for (int aux1 = 0; aux1 < size(); aux1++)
+			try {
+				if (lst(aux1).get(0).equals(obj))
+					return lst(aux1);
+			} catch (Exception e) {
+			}
+		throw new RuntimeException("SList: No slot found");
+	}
 }

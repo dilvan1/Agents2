@@ -30,12 +30,12 @@ package layout.lang;
 /////////////////////////////////////////////////////////////////////////////////////
 //
 //                     General library for reading files in any language
-//    Derived from version on C (UNICAMP 11/08/90) derived from Prolog 
+//    Derived from version on C (UNICAMP 11/08/90) derived from Prolog
 //                        (UNICAMP 29/01/90)
 //
 //                      UKC 29/09/91 - spicelib
 //                      UKC 30/11/92
-//                Versao Java UNICAMP 31/05/96 
+//                Versao Java UNICAMP 31/05/96
 //
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -44,11 +44,11 @@ package layout.lang;
 
 public class LangException extends Exception {
 
-    public LangException() {
-        super();
-    }
+	public LangException() {
+		super();
+	}
 
-    public LangException(String mes) {
-        super(mes);
-    }
+	public LangException(String mes) {
+		super(mes);
+	}
 }

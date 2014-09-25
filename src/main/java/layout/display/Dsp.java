@@ -33,47 +33,47 @@ package layout.display;
 
 public class Dsp {
 
-    static Display[] disp = new Display[5];
-    static Display disp0 = new Display2();
+	static public Display get1() {
+		//return disp0;
+		return getDisplay(1);
+	}
+	static public Display get2() {
+		return disp0;
+		//return getDisplay(2);
+	}
 
-    static public Display get1() {
-        //return disp0;
-        return getDisplay(1);
-    }
+	static public Display get3() {
+		//return disp0;
+		return getDisplay(3);
+	}
 
-    static public Display get2() {
-        return disp0;
-        //return getDisplay(2);
-    }
+	static public Display get4() {
+		//return disp0;
+		return getDisplay(4);
+	}
 
-    static public Display get3() {
-        //return disp0;
-        return getDisplay(3);
-    }
+	static Display getDisplay(int num) {
+		if (disp[num] == null)
+			disp[num] = getDisplay(String.valueOf(num));
+		return disp[num];
+	}
 
-    static public Display get4() {
-        //return disp0;
-        return getDisplay(4);
-    }
+	/**
+	 * This method was created in VisualAge.
+	 */
+	static public Display getDisplay(String name) {
+		return new Display1(name);
+	}
 
-    static Display getDisplay(int num) {
-        if (disp[num] == null)
-            disp[num] = getDisplay(String.valueOf(num));
-        return disp[num];
-    }
+	static public void println(Object str) {
+		//	System.out.println(str);
+	}
 
-    /**
-     * This method was created in VisualAge.
-     */
-    static public Display getDisplay(String name) {
-        return new Display1(name);
-    }
+	static public void printOperator(String str) {
+		//System.out.println(str);
+	}
 
-    static public void println(Object str) {
-        //	System.out.println(str);
-    }
+	static Display[] disp = new Display[5];
 
-    static public void printOperator(String str) {
-        //System.out.println(str);
-    }
+	static Display disp0 = new Display2();
 }

@@ -36,56 +36,61 @@ import layout.util.Symbol;
 import java.io.Serializable;
 
 public class Term implements Owned, Cloneable, Serializable {
-    public Symbol name;
-    public int electricNode;
-    private WireList body;
-    private Object owner;
+	public Symbol name;
+	public int electricNode;
+	private WireList body;
+	private Object owner;
 
-    public Term() {
-        electricNode = -1;
-        body = new WireList();
-        body.setOwner(this);
-    }
+	public Term() {
+		electricNode = -1;
+		body = new WireList();
+		body.setOwner(this);
+	}
 
-    public Object clone() {
-        Term trm = null;
-        try {
-            trm = (Term) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException("Clone not supported  exception");
-        }
-        trm.body = (WireList) body.clone();
-        trm.body.setOwner(trm);
-        trm.setOwner(null);
-        return trm;
-    }
+	@Override
+	public Term clone() {
+		Term trm = null;
+		try {
+			trm = (Term) super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new RuntimeException("Clone not supported  exception");
+		}
+		trm.body = (WireList) body.clone();
+		trm.body.setOwner(trm);
+		trm.setOwner(null);
+		return trm;
+	}
 
-    public boolean equals(Object obj) {
-        try {
-            Term term = (Term) obj;
-            return (name.equals(term.name) &&
-                    electricNode == term.electricNode && body.equals(term.body));
-        } catch (Exception e) {
-            return false;
-        }
-    }
+	@Override
+	public boolean equals(Object obj) {
+		try {
+			Term term = (Term) obj;
+			return (name.equals(term.name) &&
+					electricNode == term.electricNode && body.equals(term.body));
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
-    /**
-     * This method was created in VisualAge.
-     */
-    public WireList getBody() {
-        return body;
-    }
+	/**
+	 * This method was created in VisualAge.
+	 */
+	public WireList getBody() {
+		return body;
+	}
 
-    public Object getOwner() {
-        return owner;
-    }
+	@Override
+	public Object getOwner() {
+		return owner;
+	}
 
-    public void setOwner(Object obj) {
-        owner = obj;
-    }
+	@Override
+	public void setOwner(Object obj) {
+		owner = obj;
+	}
 
-    public String toString() {
-        return "Term " + name + " " + electricNode + " " + body;
-    }
+	@Override
+	public String toString() {
+		return "Term " + name + " " + electricNode + " " + body;
+	}
 }

@@ -40,21 +40,21 @@ import java.awt.*;
 
 public interface Display {
 
-    public void addLabel(String label, Pt pt);
+	public void addLabel(String label, Pt pt);
 
-    public void addLine(Linea lin, Color c);
+	public void addLine(Linea lin, Color c);
 
-    public void addRect(Rectangle rec, Color c);
+	public void addRect(Rectangle rec, Color c);
 
-    public void addRect(Rectangle rec, String l);
+	public void addRect(Rectangle rec, String l);
 
-    public void addVector(Linea vect, Color c);
+	public void addVector(Linea vect, Color c);
 
-    public void addWire(Wire w);
+	public void addWire(Wire w);
 
-    public void clear();
+	public void clear();
 
-    public void clearExtras();
+	public void clearExtras();
 
-    public void refresh();
+	public void refresh();
 }

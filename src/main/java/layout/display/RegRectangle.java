@@ -35,24 +35,25 @@ import java.awt.*;
 
 class RegRectangle extends layout.util.Rectangle implements Reg {
 
-    Color color = null;
+	Color color = null;
 
-    public RegRectangle(layout.util.Rectangle rec1) {
-        super(rec1.c1, rec1.c2);
-    }
+	public RegRectangle(layout.util.Rectangle rec1) {
+		super(rec1.c1, rec1.c2);
+	}
 
-    public RegRectangle(layout.util.Rectangle rec1, Color c) {
-        super(rec1.c1, rec1.c2);
-        color = c;
-    }
+	public RegRectangle(layout.util.Rectangle rec1, Color c) {
+		super(rec1.c1, rec1.c2);
+		color = c;
+	}
 
-    public void paint(Graphics g, int dx, int dy, int zoom, Color c, boolean fill, int heightY) {
-        int Ly = getLy();
-        if (color == null) g.setColor(c);
-        else g.setColor(color);
-        if (fill)
-            g.fillRect(((c1.x + dx) * zoom) / 128, ((heightY - c1.y - Ly + dy) * zoom) / 128, (getLx() * zoom) / 128, (Ly * zoom) / 128);
-        else
-            g.drawRect(((c1.x + dx) * zoom) / 128, ((heightY - c1.y - Ly + dy) * zoom) / 128, (getLx() * zoom) / 128, (Ly * zoom) / 128);
-    }
+	@Override
+	public void paint(Graphics g, int dx, int dy, int zoom, Color c, boolean fill, int heightY) {
+		int Ly = getLy();
+		if (color == null) g.setColor(c);
+		else g.setColor(color);
+		if (fill)
+			g.fillRect(((c1.x + dx) * zoom) / 128, ((heightY - c1.y - Ly + dy) * zoom) / 128, (getLx() * zoom) / 128, (Ly * zoom) / 128);
+		else
+			g.drawRect(((c1.x + dx) * zoom) / 128, ((heightY - c1.y - Ly + dy) * zoom) / 128, (getLx() * zoom) / 128, (Ly * zoom) / 128);
+	}
 }

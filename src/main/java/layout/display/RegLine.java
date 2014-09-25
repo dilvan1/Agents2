@@ -37,15 +37,16 @@ import java.awt.*;
 
 class RegLine extends Linea implements Reg {
 
-    Color c;
+	Color c;
 
-    public RegLine(Linea lin, Color c) {
-        super(lin.c1, lin.c2);
-        this.c = c;
-    }
+	public RegLine(Linea lin, Color c) {
+		super(lin.c1, lin.c2);
+		this.c = c;
+	}
 
-    public void paint(Graphics g, int dx, int dy, int zoom, Color color, boolean fill, int heightY) {
-        g.setColor(c);
-        g.drawLine(((c1.x + dx) * zoom) / 128, ((c1.y + dy) * zoom) / 128, ((c2.x + dx) * zoom) / 128, ((c2.y + dy) * zoom) / 128);
-    }
+	@Override
+	public void paint(Graphics g, int dx, int dy, int zoom, Color color, boolean fill, int heightY) {
+		g.setColor(c);
+		g.drawLine(((c1.x + dx) * zoom) / 128, ((c1.y + dy) * zoom) / 128, ((c2.x + dx) * zoom) / 128, ((c2.y + dy) * zoom) / 128);
+	}
 }

@@ -37,40 +37,43 @@ import java.io.Serializable;
 
 public class CompReg implements Cloneable, Serializable {
 
-    public Symbol termName;
-    public int reference;
-    public int routingNet;
+	public Symbol termName;
+	public int reference;
+	public int routingNet;
 
-    public CompReg() {
-        reference = 0;
-        routingNet = -1;
-    }
+	public CompReg() {
+		reference = 0;
+		routingNet = -1;
+	}
 
-    public CompReg(Symbol name, int ref) {
-        termName = name;
-        reference = ref;
-        routingNet = -1;
-    }
+	public CompReg(Symbol name, int ref) {
+		termName = name;
+		reference = ref;
+		routingNet = -1;
+	}
 
-    public Object clone() {
-        try {
-            return super.clone();
-        } catch (CloneNotSupportedException e) {
-            return null;
-        }
-    }
+	@Override
+	public CompReg clone() {
+		try {
+			return (CompReg) super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
+	}
 
-    public boolean equals(Object obj) {
-        try {
-            CompReg reg = (CompReg) obj;
-            return (reference == reg.reference && termName.equals(reg.termName) &&
-                    routingNet == reg.routingNet);
-        } catch (Exception e) {
-            return false;
-        }
-    }
+	@Override
+	public boolean equals(Object obj) {
+		try {
+			CompReg reg = (CompReg) obj;
+			return (reference == reg.reference && termName.equals(reg.termName) &&
+					routingNet == reg.routingNet);
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
-    public String toString() {
-        return "Comp " + reference + " " + termName + " " + routingNet + " ";
-    }
+	@Override
+	public String toString() {
+		return "Comp " + reference + " " + termName + " " + routingNet + " ";
+	}
 }
